@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node dev_server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node node_modules/nyc/bin/nyc.js node_modules/mocha/bin/mocha --compilers js:babel-register"
   },
   "repository": {
     "type": "git",
@@ -51,11 +51,14 @@
     "babel-preset-react": "~6.5.0",
     "babel-preset-stage-1": "~6.5.0",
     "babel-preset-stage-2": "~6.5.0",
+    "babel-register": "^6.9.0",
     "css-loader": "~0.23.1",
     "express": "~4.13.4",
     "less": "~2.7.1",
     "less-loader": "~2.2.3",
+    "mocha": "^2.5.3",
     "morgan": "~1.7.0",
+    "nyc": "^6.6.1",
     "postcss": "~5.0.21",
     "postcss-loader": "~0.9.1",
     "style-loader": "~0.13.1",
