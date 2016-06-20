@@ -3,7 +3,7 @@ polyfill();
 import 'isomorphic-fetch';
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import App from './containers/app';
+import CalendarContainer from './containers/calendar_container';
 
 import './app.css';
 
@@ -17,7 +17,7 @@ export default class ResponsiveCalendar extends Component {
 
     return (
       <Provider store={store}>
-        <App {...options}/>
+        <CalendarContainer {...options}/>
       </Provider>,
     );
   }

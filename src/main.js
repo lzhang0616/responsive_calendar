@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import store from './store/calendar_store';
-import ResponsiveCalendar from './app';
+import ResponsiveCalendar from './index';
 
 export const calendar = (options = {}) => {
   render(

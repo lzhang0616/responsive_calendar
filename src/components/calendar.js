@@ -13,6 +13,16 @@ export default class Calendar extends Component {
     super(props);
   }
 
+  componentDidMount() {
+    const { initEvents } = this.props;
+
+    fetch('/calendar/events')
+      .then(response => response.json())
+      .then(events => initEvents(events))
+      .catch(err => console.error(err));
+  }
+
+
   renderView() {
     const { view, weeks, days, date, events } = this.props;
 

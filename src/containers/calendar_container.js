@@ -6,8 +6,9 @@ import _ from 'lodash';
 
 import { backInDate, backToToday, forwardInDate } from '../actions/calendar_controls_actions';
 import { showDayView, showWeekView, showMonthView } from '../actions/view_controls_actions';
+import { initEvents } from '../actions/events_actions';
 
-class App extends Component {
+class CalendarContainer extends Component {
   constructor(props) {
     super(props);
   }
@@ -82,7 +83,7 @@ const getDays = ({ date, view, events, selected }) => {
       date: current.toDate(),
       tense: getTense(current, today),
       first: current.date() === 1,
-      events: eventsByDay[current.format('YYY-MM-DD')] || events,
+      events: eventsByDay[current.format('YYYY-MM-DD')] || [],
       selected
     };
 
@@ -129,13 +130,14 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 
   return {
-    onBack: (view) => { dispatch(backInDate(view)); },
-    onToday: (view) => { dispatch(backToToday(view)); },
-    onForward: (view) => { dispatch(forwardInDate(view)); },
-    showDayView: () => { dispatch(showDayView()); },
-    showWeekView: () => { dispatch(showWeekView()); },
-    showMonthView: () => { dispatch(showMonthView()); }
+    onBack: (view) => dispatch(backInDate(view)),
+    onToday: (view) => dispatch(backToToday(view)),
+    onForward: (view) => dispatch(forwardInDate(view)),
+    showDayView: () => dispatch(showDayView()),
+    showWeekView: () => dispatch(showWeekView()),
+    showMonthView: () => dispatch(showMonthView()),
+    initEvents: (events) => dispatch(initEvents(events))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(CalendarContainer);

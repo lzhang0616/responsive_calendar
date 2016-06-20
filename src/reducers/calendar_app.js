@@ -1,10 +1,12 @@
 import moment from 'moment';
 import monthViewInitialState from '../store/month_view_initial_state.js';
 import { BACK_IN_DATE, BACK_TO_TODAY, FORWARD_IN_DATE,
-         SHOW_DAY_VIEW, SHOW_WEEK_VIEW, SHOW_MONTH_VIEW } from '../actions/actions_types';
+         SHOW_DAY_VIEW, SHOW_WEEK_VIEW, SHOW_MONTH_VIEW, INIT_EVENTS } from '../actions/actions_types';
+
+// TODO use combineReducers to split this root reducer into separate reducers
 
 const calendarApp = (state = monthViewInitialState, action) => {
-  const { type, view } = action;
+  const { type, view, events } = action;
   const { date } = state;
 
   let newState = state;
@@ -30,6 +32,9 @@ const calendarApp = (state = monthViewInitialState, action) => {
       break;
     case SHOW_MONTH_VIEW:
       newState = Object.assign({}, state, { view: 'month' });
+      break;
+    case INIT_EVENTS:
+      newState = Object.assign({}, state, { events });
       break;
   }
 

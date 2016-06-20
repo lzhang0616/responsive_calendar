@@ -25,7 +25,7 @@ app.use(webpackHotMiddleware(compiler));
 let _ = require('lodash');
 let data = require('./dev_data.json');
 
-function getEvents(user, start, end, type) {
+function getEvents(start, end, type) {
   var events = data;
   if (type) {
     events = _.filter(events, { type: type });
@@ -42,47 +42,22 @@ function getEvent(id) {
   return _.find(data, { id: id });
 }
 
-// Count all events for user
-app.head('/user/:user/events', (req, resp) => {
-  let user = req.params.user;
-  let start = req.query.start;
-  let end = req.query.end;
-
-  let events = getEvents(user, start, end);
-  resp.set('X-Event-Count', events.length);
-  resp.sendStatus(200);
-});
-
 // List all events for user
-app.get('/user/:user/events', (req, resp) => {
-  let user = req.params.user;
+app.get('/calendar/events', (req, resp) => {
   let start = req.query.start;
   let end = req.query.end;
 
-  let events = getEvents(user, start, end);
+  let events = getEvents(start, end);
   resp.json(events);
 });
 
-// Count all events of type for user
-app.head('/user/:user/events/:type', (req, resp) => {
-  let user = req.params.user;
-  let type = req.params.type;
-  let start = req.query.start;
-  let end = req.query.end;
-
-  let events = getEvents(user, start, end, type);
-  resp.set('X-Event-Count', events.length);
-  resp.sendStatus(200);
-});
-
 // List all events of type for user
-app.get('/user/:user/events/:type', (req, resp) => {
-  let user = req.params.user;
+app.get('/calendar/events/:type', (req, resp) => {
   let type = req.params.type;
   let start = req.query.start;
   let end = req.query.end;
 
-  let events = getEvents(user, start, end, type);
+  let events = getEvents(start, end, type);
 
   resp.json(events);
 });
