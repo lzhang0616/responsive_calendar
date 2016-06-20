@@ -1,0 +1,57 @@
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 200;
+}
+
+h1 small, .h1 small, h2 small, .h2 small, h3 small, .h3 small, h1 .small, .h1 .small, h2 .small, .h2 .small, h3 .small, .h3 .small {
+  display: block;
+}
+
+body, html {
+  height: 100%;
+}
+
+body {
+  background-color: transparent;
+}
+
+html {
+  background-attachment: fixed;
+  background-position: center center;
+  background-size: cover;
+}
+
+h1 small {
+  display: block;
+  font-family: inherit;
+}
+
+hr {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.container {
+  width: 100%;
+}
+
+.panel {
+  padding: 15px;
+}
+
+
+@media (max-width: 767px) {
+  .text-center-xs {
+    text-align: center;
+  }
+}
+
+/* App Look and Feel */
+
+.overlay {
+  background-color: rgba(0,0,0,0.7);
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1000;
+}
