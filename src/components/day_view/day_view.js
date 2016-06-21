@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Event from '../event';
 import { datetime } from '../../utilities/calendar_helpers';
 
 export default class DayView extends Component {
