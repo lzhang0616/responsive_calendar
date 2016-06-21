@@ -1,7 +1,8 @@
 import moment from 'moment';
 import monthViewInitialState from '../store/month_view_initial_state.js';
 import { BACK_IN_DATE, BACK_TO_TODAY, FORWARD_IN_DATE,
-         SHOW_DAY_VIEW, SHOW_WEEK_VIEW, SHOW_MONTH_VIEW, INIT_EVENTS } from '../actions/actions_types';
+         SHOW_DAY_VIEW, SHOW_WEEK_VIEW, SHOW_MONTH_VIEW,
+         INIT_EVENTS } from '../actions/actions_types';
 
 // TODO use combineReducers to split this root reducer into separate reducers
 
@@ -11,7 +12,7 @@ const calendarApp = (state = monthViewInitialState, action) => {
 
   let newState = state;
 
-  switch(type) {
+  switch (type) {
     case BACK_IN_DATE:
       const prevDate = date.add(-1, view);
       newState = Object.assign({}, state, { date: prevDate, selected: prevDate });
@@ -35,6 +36,8 @@ const calendarApp = (state = monthViewInitialState, action) => {
       break;
     case INIT_EVENTS:
       newState = Object.assign({}, state, { events });
+      break;
+    default:
       break;
   }
 

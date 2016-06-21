@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 
 export default class CalendarControls extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { calendarControlsClass, onBack, onToday, onForward, view } = this.props;
 

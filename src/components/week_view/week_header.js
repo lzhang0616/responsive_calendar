@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import { datetime } from '../../utilities/calendar_helpers';
 
 export default class WeekHeader extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   renderDays() {
     const { days } = this.props;
 

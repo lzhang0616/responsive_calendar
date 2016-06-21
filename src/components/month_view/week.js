@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import Day from './day';
 
 export default class Week extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   renderDays() {
     const { days } = this.props;
 

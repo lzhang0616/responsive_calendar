@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 
 export default class Event extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   renderEventLinks() {
     const { type, title } = this.props;
 
-    let aElementClass = '', iElementClass = '';
+    let aElementClass = '';
+    let iElementClass = '';
 
-    switch(type) {
+    switch (type) {
       case 'birthday':
         aElementClass = 'fc-event label label-success';
         iElementClass = 'fa fa-fw fa-birthday-cake';

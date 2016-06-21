@@ -9,10 +9,6 @@ import { showDayView, showWeekView, showMonthView } from '../actions/view_contro
 import { initEvents } from '../actions/events_actions';
 
 class CalendarContainer extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return <Calendar {...this.props} />;
   }
@@ -21,7 +17,7 @@ class CalendarContainer extends Component {
 const getStartDate = (date, view) => {
   let startDate;
 
-  switch(view) {
+  switch (view) {
     case 'month':
       startDate = moment(date).startOf('month').startOf('week');
       break;
@@ -31,6 +27,8 @@ const getStartDate = (date, view) => {
     case 'day':
       startDate = date;
       break;
+    default:
+      break;
   }
 
   return startDate;
@@ -39,15 +37,20 @@ const getStartDate = (date, view) => {
 const getEndDate = (date, view) => {
   let endDate;
 
-  switch(view) {
+  switch (view) {
     case 'month':
-      endDate = moment(date).endOf('month').add(1, 'weeks').endOf('week');
-      break;
+      endDate = moment(date)
+        .endOf('month')
+        .add(1, 'weeks')
+        .endOf('week');
+        break;
     case 'week':
       endDate = moment(date).endOf('week');
       break;
     case 'day':
       endDate = date;
+      break;
+    default:
       break;
   }
 
@@ -69,17 +72,19 @@ const getTense = (date, today) => {
 };
 
 const getDays = ({ date, view, events, selected }) => {
-  let startDate = getStartDate(date, view).clone();
-  let endDate = getEndDate(date, view);
-  let today = moment().startOf('day');
+  let current;
+  let day;
+  const startDate = getStartDate(date, view).clone();
+  const endDate = getEndDate(date, view);
+  const today = moment().startOf('day');
 
-  let eventsByDay = _.groupBy(events, 'date');
+  const eventsByDay = _.groupBy(events, 'date');
 
-  let days = [];
+  const days = [];
 
   do {
-    var current = startDate.clone();
-    var day = {
+    current = startDate.clone();
+    day = {
       date: current.toDate(),
       tense: getTense(current, today),
       first: current.date() === 1,
@@ -89,16 +94,18 @@ const getDays = ({ date, view, events, selected }) => {
 
     days.push(day);
     startDate.add(1, 'days');
-   } while(startDate.isBefore(endDate))
+  } while (startDate.isBefore(endDate));
 
   return days;
 };
 
 const getWeeks = (state) => {
+  let i;
+  let len;
   const days = getDays(state);
 
-  let weeks = [];
-  for (var i = 0, len = days.length; i < len; i += 7) {
+  const weeks = [];
+  for (i = 0, len = days.length; i < len; i += 7) {
     weeks.push(days.slice(i, i + 7));
   }
 
@@ -108,9 +115,9 @@ const getWeeks = (state) => {
 const mapStateToProps = (state) => {
   const { date, view } = state;
 
-  let props = { date, view };
+  const props = { date, view };
 
-  switch(view) {
+  switch (view) {
     case 'month':
       props.weeks = getWeeks(state);
       break;
@@ -122,13 +129,14 @@ const mapStateToProps = (state) => {
       props.date = day.date;
       props.events = day.events;
       break;
+    default:
+      break;
   }
 
   return props;
 };
 
 const mapDispatchToProps = (dispatch) => {
-
   return {
     onBack: (view) => dispatch(backInDate(view)),
     onToday: (view) => dispatch(backToToday(view)),
