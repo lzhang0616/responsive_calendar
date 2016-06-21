@@ -4,6 +4,7 @@
   "description": "Calendar app for apm bundle",
   "main": "app.js",
   "scripts": {
+    "lint": "node node_modules/eslint/bin/eslint.js src; exit 0",
     "start": "node dev_server.js",
     "test": "node node_modules/nyc/bin/nyc.js node_modules/mocha/bin/mocha --compilers js:babel-register"
   },
@@ -53,6 +54,9 @@
     "babel-preset-stage-2": "~6.5.0",
     "babel-register": "^6.9.0",
     "css-loader": "~0.23.1",
+    "eslint": "^2.13.1",
+    "eslint-config-airbnb": "^9.0.1",
+    "eslint-plugin-import": "^1.8.1",
     "express": "~4.13.4",
     "less": "~2.7.1",
     "less-loader": "~2.2.3",
