@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import { datetime } from '../../utilities/calendar_helpers';
 
 export default class DayLabel extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   renderFirst() {
     const { first, date } = this.props;
 

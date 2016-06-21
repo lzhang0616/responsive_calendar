@@ -3,10 +3,6 @@ import WeekDay from './week_day';
 import WeekHeader from './week_header';
 
 export default class WeekView extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   renderDays() {
     const { days } = this.props;
 

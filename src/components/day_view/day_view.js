@@ -3,10 +3,6 @@ import Event from '../event';
 import { datetime } from '../../utilities/calendar_helpers';
 
 export default class DayView extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   renderEvents() {
     const { events } = this.props;
 

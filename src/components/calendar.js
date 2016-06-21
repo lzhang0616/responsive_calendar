@@ -9,10 +9,6 @@ import { datetime } from '../utilities/calendar_helpers';
 import './calendar.less';
 
 export default class Calendar extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     const { initEvents } = this.props;
 
@@ -28,7 +24,7 @@ export default class Calendar extends Component {
 
     let showingView;
 
-    switch(view) {
+    switch (view) {
       case 'month':
         showingView = <MonthView weeks={weeks} />;
         break;
@@ -37,6 +33,8 @@ export default class Calendar extends Component {
         break;
       case 'day':
         showingView = <DayView date={date} events={events} />;
+        break;
+      default:
         break;
     }
 
@@ -57,7 +55,8 @@ export default class Calendar extends Component {
   }
 
   render() {
-    const { date, onBack, onToday, onForward, showDayView, showWeekView, showMonthView, view } = this.props;
+    const { onBack, onToday, onForward, showDayView,
+            showWeekView, showMonthView, view } = this.props;
 
     return (
       <div className='fc-calendar-container'>

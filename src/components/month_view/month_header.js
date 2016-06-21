@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import { datetime, weekday } from '../../utilities/calendar_helpers';
 
-export default  class MonthHeader extends Component {
-  constructor(props) {
-    super(props);
-  }
-
+export default class MonthHeader extends Component {
   renderWeekdays() {
     const weekdays = [0, 1, 2, 3, 4, 5, 6];
 

@@ -3,10 +3,6 @@ import Event from '../event';
 import { datetime } from '../../utilities/calendar_helpers';
 
 export default class WeekDay extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   renderEvents() {
     const { events } = this.props;
 

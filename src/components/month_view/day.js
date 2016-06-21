@@ -4,10 +4,6 @@ import DayLabel from './day_label';
 import Event from '../event';
 
 export default class Day extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   renderEvents() {
     const { events } = this.props;
 
