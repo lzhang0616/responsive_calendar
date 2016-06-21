@@ -8,10 +8,6 @@ import CalendarContainer from './containers/calendar_container';
 import './app.css';
 
 export default class ResponsiveCalendar extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { store, options } = this.props;
 
