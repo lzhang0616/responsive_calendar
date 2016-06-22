@@ -10,7 +10,7 @@ export const calendarManagerInit = {
 
 export const eventsManagerInit = {
   events: [],
-  eventSources: []
+  eventSources: ['/calendar/events', '/calendar/events']
 };
 
 export default {
