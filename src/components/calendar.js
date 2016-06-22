@@ -57,13 +57,13 @@ export default class Calendar extends Component {
     return (
       <div className='fc-calendar-container'>
         <div className='row'>
-          <div className='col-xs-5'>
+          <div className='col-sm-5'>
             {this.renderHeader()}
           </div>
-          <div className='col-xs-7 text-right'>
+          <div className='col-sm-7'>
             <CalendarControls calendarControlsClass='h2' onBack={onBack}
               onToday={onToday} onForward={onForward} view={view} />
-            <ViewControls viewControlsClass='h2' showDayView={showDayView}
+            <ViewControls viewControlsClass='h2 pull-right' showDayView={showDayView}
               showWeekView={showWeekView} showMonthView={showMonthView} view={view} />
           </div>
         </div>
