@@ -1,5 +1,5 @@
 import { createStore } from 'redux';
 import calendarApp from '../reducers/calendar_app';
-import monthViewInitialState from './month_view_initial_state.js';
+import defaultInitialState from './default_initial_state';
 
-export default createStore(calendarApp, monthViewInitialState);
+export default createStore(calendarApp, defaultInitialState);

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Calendar from '../components/calendar';
 import moment from 'moment';
 import _ from 'lodash';
-
+import { flattenState } from '../utilities/store_helpers';
 import { backInDate, backToToday, forwardInDate } from '../actions/calendar_controls_actions';
 import { showDayView, showWeekView, showMonthView } from '../actions/view_controls_actions';
 import { initEvents } from '../actions/events_actions';
@@ -113,19 +113,20 @@ const getWeeks = (state) => {
 };
 
 const mapStateToProps = (state) => {
-  const { date, view } = state;
+  const flatState = flattenState(state);
+  const { date, view } = flatState;
 
   const props = { date, view };
 
   switch (view) {
     case 'month':
-      props.weeks = getWeeks(state);
+      props.weeks = getWeeks(flatState);
       break;
     case 'week':
-      props.days = getDays(state);
+      props.days = getDays(flatState);
       break;
     case 'day':
-      const day = getDays(state)[0];
+      const day = getDays(flatState)[0];
       props.date = day.date;
       props.events = day.events;
       break;

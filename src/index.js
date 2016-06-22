@@ -1,6 +1,4 @@
-import { polyfill } from 'es6-promise';
-polyfill();
-import 'isomorphic-fetch';
+import 'babel-polyfill';
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import CalendarContainer from './containers/calendar_container';

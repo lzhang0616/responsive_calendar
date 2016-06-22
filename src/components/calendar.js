@@ -5,6 +5,7 @@ import DayView from './day_view/day_view';
 import CalendarControls from './calendar_controls';
 import ViewControls from './view_controls';
 import { datetime } from '../utilities/calendar_helpers';
+import fetch from 'isomorphic-fetch';
 
 import './calendar.less';
 
