@@ -8,7 +8,8 @@ const eventsManager = (state = eventsManagerInit, action) => {
 
   switch (type) {
     case INIT_EVENTS:
-      newState = Object.assign({}, state, { events });
+      const newEvents = state.events.concat(events);
+      newState = Object.assign({}, state, { events: newEvents });
       break;
     default:
       break;

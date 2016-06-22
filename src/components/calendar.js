@@ -5,7 +5,6 @@ import DayView from './day_view/day_view';
 import CalendarControls from './calendar_controls';
 import ViewControls from './view_controls';
 import { datetime } from '../utilities/calendar_helpers';
-import fetch from 'isomorphic-fetch';
 
 import './calendar.less';
 
@@ -13,12 +12,8 @@ export default class Calendar extends Component {
   componentDidMount() {
     const { initEvents } = this.props;
 
-    fetch('/calendar/events')
-      .then(response => response.json())
-      .then(events => initEvents(events))
-      .catch(err => console.error(err));
+    initEvents();
   }
-
 
   renderView() {
     const { view, weeks, days, date, events } = this.props;

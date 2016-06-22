@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { flattenState } from '../utilities/store_helpers';
 import { backInDate, backToToday, forwardInDate } from '../actions/calendar_controls_actions';
 import { showDayView, showWeekView, showMonthView } from '../actions/view_controls_actions';
-import { initEvents } from '../actions/events_actions';
+import { fetchEventSources } from '../actions/events_actions';
 
 class CalendarContainer extends Component {
   render() {
@@ -145,7 +145,7 @@ const mapDispatchToProps = dispatch => {
     showDayView: () => dispatch(showDayView()),
     showWeekView: () => dispatch(showWeekView()),
     showMonthView: () => dispatch(showMonthView()),
-    initEvents: events => dispatch(initEvents(events))
+    initEvents: () => dispatch(fetchEventSources())
   };
 };
 
