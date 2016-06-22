@@ -6,7 +6,7 @@ import CalendarControls from './calendar_controls';
 import ViewControls from './view_controls';
 import { datetime } from '../utilities/calendar_helpers';
 
-import './calendar.less';
+import './calendar.scss';
 
 export default class Calendar extends Component {
   componentDidMount() {
