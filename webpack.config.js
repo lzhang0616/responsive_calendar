@@ -48,9 +48,6 @@ module.exports = {
   ],
   postcss: [ autoprefixer({ browsers: ['last 2 versions'] }) ],
   resolve: {
-    alias: {
-      fullCalendarStyle$: '../../node_modules/fullcalendar/dist/fullcalendar.css'
-    },
     extensions: ['', '.js', '.jsx'],
     modules: ['vendor', 'web_modules', 'node_modules']
   },
