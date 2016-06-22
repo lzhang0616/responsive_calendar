@@ -1,20 +1,20 @@
 import { BACK_IN_DATE, BACK_TO_TODAY, FORWARD_IN_DATE } from './actions_types';
 
-export const backInDate = (view) => {
+export const backInDate = view => {
   return {
     type: BACK_IN_DATE,
     view
   };
 };
 
-export const backToToday = (view) => {
+export const backToToday = view => {
   return {
     type: BACK_TO_TODAY,
     view
   };
 };
 
-export const forwardInDate = (view) => {
+export const forwardInDate = view => {
   return {
     type: FORWARD_IN_DATE,
     view
