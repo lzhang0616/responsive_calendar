@@ -99,7 +99,7 @@ const getDays = ({ date, view, events, selected }) => {
   return days;
 };
 
-const getWeeks = (state) => {
+const getWeeks = state => {
   let i;
   let len;
   const days = getDays(state);
@@ -112,7 +112,7 @@ const getWeeks = (state) => {
   return weeks;
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const flatState = flattenState(state);
   const { date, view } = flatState;
 
@@ -137,15 +137,15 @@ const mapStateToProps = (state) => {
   return props;
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    onBack: (view) => dispatch(backInDate(view)),
-    onToday: (view) => dispatch(backToToday(view)),
-    onForward: (view) => dispatch(forwardInDate(view)),
+    onBack: view => dispatch(backInDate(view)),
+    onToday: view => dispatch(backToToday(view)),
+    onForward: view => dispatch(forwardInDate(view)),
     showDayView: () => dispatch(showDayView()),
     showWeekView: () => dispatch(showWeekView()),
     showMonthView: () => dispatch(showMonthView()),
-    initEvents: (events) => dispatch(initEvents(events))
+    initEvents: events => dispatch(initEvents(events))
   };
 };
 

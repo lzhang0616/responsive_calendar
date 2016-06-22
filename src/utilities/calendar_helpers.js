@@ -4,7 +4,7 @@ export const datetime = (date, format) => {
   return moment(date).format(format);
 };
 
-export const fromNow = (date) => {
+export const fromNow = date => {
   return moment(date).fromNow();
 };
 
