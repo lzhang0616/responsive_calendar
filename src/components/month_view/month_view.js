@@ -11,7 +11,7 @@ export default class MonthView extends Component {
 
   render() {
     return (
-      <div className='fc-calendar fc-five-rows'>
+      <div className='fc-calendar fc-month-view'>
         <MonthHeader />
         <div className='fc-body'>
           {this.renderWeeks()}

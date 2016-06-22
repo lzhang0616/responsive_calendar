@@ -19,7 +19,7 @@ export default class DayView extends Component {
     const { date } = this.props;
 
     return (
-      <div className="fc-calendar fc-one-row">
+      <div className="fc-calendar fc-day_view">
         <div className="fc-head text-left">
           {datetime(date, 'dddd')}
         </div>

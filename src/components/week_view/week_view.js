@@ -18,7 +18,7 @@ export default class WeekView extends Component {
     const { days } = this.props;
 
     return (
-      <div className="fc-calendar fc-one-row">
+      <div className="fc-calendar fc-week-view">
         <WeekHeader days={days} />
         <div className="fc-body">
           <div className="fc-row">
