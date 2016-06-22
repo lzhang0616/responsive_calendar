@@ -68,6 +68,7 @@ export default class Calendar extends Component {
           <div className='col-xs-7 text-right'>
             <CalendarControls calendarControlsClass='h2' onBack={onBack}
               onToday={onToday} onForward={onForward} view={view} />
+            &nbsp;
             <ViewControls viewControlsClass='h2' showDayView={showDayView}
               showWeekView={showWeekView} showMonthView={showMonthView} view={view} />
           </div>
