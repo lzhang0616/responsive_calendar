@@ -11,3 +11,7 @@ export const fromNow = (date) => {
 export const weekday = (number) => {
   return moment().weekday(number);
 };
+
+export const today = () => {
+  return moment().startOf('day');
+};
