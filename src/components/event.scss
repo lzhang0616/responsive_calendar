@@ -1,0 +1,25 @@
+.fc-event {
+  border-radius: .25em;
+  color: black;
+  display: block;
+  font-size: 75%;
+  font-weight: inherit;
+  margin-bottom: 1px;
+  padding: 2px;
+  text-align: left;
+  i {
+    opacity: 0.5;
+  }
+}
+
+.fc-event-birthday {
+  background-color: rgb(208, 226, 239);
+}
+
+.fc-event-personal {
+  background-color: rgb(253, 219, 181);
+}
+
+.fc-event-work {
+  background-color: rgb(186, 209, 186);
+}

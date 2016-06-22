@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './event.scss';
 
 export default class Event extends Component {
   renderEventLinks() {
