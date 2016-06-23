@@ -2,8 +2,22 @@ $border_color: #ddd;
 
 .fc-calendar-container {
   position: relative;
-  min-height: 400px; // TODO
-  width: 100%;
+
+  &.embedded {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+
+    header {
+      order: 1;
+      flex-shrink: 0;
+    }
+
+    section {
+      order: 2;
+      overflow-y: auto;
+    }
+  }
 }
 
 .fc-calendar {
