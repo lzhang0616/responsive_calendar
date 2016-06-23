@@ -12,25 +12,20 @@ const concatEvents = (state, events) => {
   return { ...state, events: newEvents };
 };
 
-const eventsManager = (state = eventsManagerInit, action) => {
-  const { type, events, firstFetch } = action;
-
+const eventsManager = (state = eventsManagerInit,
+                       {type, events, firstFetch, lastFetch, newStart, newEnd}) => {
   let newState = state;
 
   switch (type) {
     case INIT_EVENTS:
-      newState = concatEvents(state, events);
-      break;
     case UPDATE_EVENTS:
-      if (firstFetch) {
-        newState = repopulateEvents(state, events);
-      } else {
-        newState = concatEvents(state, events);
-      }
+      newState = concatEvents(state, events);
       break;
     default:
       break;
   }
+
+  if (lastFetch) newState = { ...newState, cachedStart: newStart, cachedEnd: newEnd };
 
   return newState;
 };
