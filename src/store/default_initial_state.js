@@ -10,7 +10,10 @@ export const calendarManagerInit = {
 
 export const eventsManagerInit = {
   events: [],
-  eventSources: ['/calendar/events', '/calendar/events']
+  eventSources: ['/calendar/events'],
+  startQueryParam: 'start',
+  endQueryParam: 'end',
+  dateFormatter: 'YYYY-MM-DD'
 };
 
 export default {

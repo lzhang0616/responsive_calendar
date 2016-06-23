@@ -5,3 +5,4 @@ export const SHOW_DAY_VIEW = 'show_day_view';
 export const SHOW_WEEK_VIEW = 'show_week_view';
 export const SHOW_MONTH_VIEW = 'show_month_view';
 export const INIT_EVENTS = 'init_events';
+export const UPDATE_EVENTS = 'update_events';
