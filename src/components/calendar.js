@@ -65,7 +65,7 @@ export default class Calendar extends Component {
   }
 
   displayClass() {
-    return `fc-calendar-container ${this.state.display}`
+    return `fc-calendar-container ${this.state.display}`;
   }
 
   render() {
