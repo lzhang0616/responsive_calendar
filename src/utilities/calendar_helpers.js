@@ -1,21 +1,13 @@
 import moment from 'moment';
 import _ from 'lodash';
 
-export const datetime = (date, format) => {
-  return moment(date).format(format);
-};
+export const datetime = (date, format) => moment(date).format(format);
 
-export const fromNow = date => {
-  return moment(date).fromNow();
-};
+export const fromNow = date => moment(date).fromNow();
 
-export const weekday = (number) => {
-  return moment().weekday(number);
-};
+export const weekday = number => moment().weekday(number);
 
-export const today = () => {
-  return moment().startOf('day');
-};
+export const today = () => moment().startOf('day');
 
 export const getStartDate = (date, view) => {
   let startDate;

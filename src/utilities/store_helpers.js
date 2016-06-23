@@ -1,5 +1,1 @@
-export const flattenState = state => {
-  const { calendarManager, eventsManager} = state;
-
-  return {...calendarManager, ...eventsManager};
-};
+export const flattenState = ({ calendarManager, eventsManager }) => { return { ...calendarManager, ...eventsManager } };

@@ -8,4 +8,5 @@ export default createStore(
   defaultInitialState,
   applyMiddleware(
     thunkMiddleware
-  ));
+  )
+);
