@@ -9,6 +9,10 @@ export const weekday = number => moment().weekday(number);
 
 export const today = () => moment().startOf('day');
 
+export const flattenState = ({ calendarManager, eventsManager }) => {
+  return { ...calendarManager, ...eventsManager };
+};
+
 export const getStartDate = (date, view) => {
   let startDate;
 
@@ -51,6 +55,8 @@ export const getEndDate = (date, view) => {
 
   return endDate;
 };
+
+export const getRange = (date, view) => [ getStartDate(date, view), getEndDate(date, view) ];
 
 const getTense = (date, today) => {
   let tense = '';

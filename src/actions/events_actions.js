@@ -1,7 +1,6 @@
-import { INIT_EVENTS, UPDATE_EVENTS } from './actions_types';
 import fetch from 'isomorphic-fetch';
-import { flattenState } from '../utilities/store_helpers';
-import { getStartDate, getEndDate } from '../utilities/calendar_helpers';
+import { INIT_EVENTS, UPDATE_EVENTS } from './actions_types';
+import { getRange, flattenState } from '../utilities/calendar_helpers';
 
 const updateEvents = (events, init, firstFetch) => {
   let type;
@@ -22,8 +21,7 @@ const sourceUrl = (source, state) => {
   const flatState = flattenState(state);
   const { startQueryParam, endQueryParam, dateFormatter, date, view } = flatState;
 
-  const start = getStartDate(date, view).format(dateFormatter);
-  const end = getEndDate(date, view).format(dateFormatter);
+  const [ start, end ] = getRange(date, view).map(day => day.format(dateFormatter));
 
   const url = `${source}?${startQueryParam}=${start}&${endQueryParam}=${end}`;
 

@@ -1,12 +1,18 @@
 import thunkMiddleware from 'redux-thunk';
-import { createStore, applyMiddleware } from 'redux';
 import calendarApp from '../reducers/calendar_app';
 import defaultInitialState from './default_initial_state';
+import { createStore, applyMiddleware } from 'redux';
+import { fetchEventSources } from '../actions/events_actions';
 
-export default createStore(
+const store = createStore(
   calendarApp,
   defaultInitialState,
   applyMiddleware(
     thunkMiddleware
   )
 );
+
+store.dispatch(fetchEventSources(true));
+
+export default store;
+

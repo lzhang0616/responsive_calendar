@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import Calendar from '../components/calendar';
 import { connect } from 'react-redux';
-import { flattenState } from '../utilities/store_helpers';
 import { backInDate, backToToday, forwardInDate } from '../actions/calendar_controls_actions';
 import { showDayView, showWeekView, showMonthView } from '../actions/view_controls_actions';
 import { fetchEventSources } from '../actions/events_actions';
-import { getDays, getWeeks } from '../utilities/calendar_helpers';
+import { getDays, getWeeks, flattenState} from '../utilities/calendar_helpers';
 
 class CalendarContainer extends Component {
   render() {
@@ -47,8 +46,7 @@ const mapDispatchToProps = dispatch => {
     onForward: view => batch(dispatch, [ forwardInDate(view), fetchEventSources() ]),
     showDayView: () => batch(dispatch, [ showDayView(), fetchEventSources() ]),
     showWeekView: () => batch(dispatch, [ showWeekView(), fetchEventSources() ]),
-    showMonthView: () => batch(dispatch, [ showMonthView(), fetchEventSources() ]),
-    initEvents: () => dispatch(fetchEventSources(true))
+    showMonthView: () => batch(dispatch, [ showMonthView(), fetchEventSources() ])
   };
 };
 

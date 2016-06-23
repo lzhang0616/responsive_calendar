@@ -1,7 +1,7 @@
 import 'babel-polyfill';
 import React, { Component } from 'react';
-import { Provider } from 'react-redux';
 import CalendarContainer from './containers/calendar_container';
+import { Provider } from 'react-redux';
 
 import './app.css';
 

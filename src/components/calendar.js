@@ -20,10 +20,6 @@ export default class Calendar extends Component {
   }
 
   componentDidMount() {
-    const { initEvents } = this.props;
-
-    initEvents();
-
     const node = findDOMNode(this);
     this.setState({ display: node.offsetWidth <= 700 ? 'vertical' : 'horizontal' });
     ResizeSensor(node, () => {
