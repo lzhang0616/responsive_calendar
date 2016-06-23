@@ -1,18 +1,32 @@
 import React, { Component } from 'react';
-import MonthView from './month_view/month_view.js';
-import WeekView from './week_view/week_view';
-import DayView from './day_view/day_view';
 import CalendarControls from './calendar_controls';
+import DayView from './day_view/day_view';
+import MonthView from './month_view/month_view.js';
+import ResizeSensor from 'css-element-queries/src/ResizeSensor';
 import ViewControls from './view_controls';
+import WeekView from './week_view/week_view';
 import { datetime } from '../utilities/calendar_helpers';
+import { findDOMNode } from 'react-dom';
 
 import './calendar.scss';
 
 export default class Calendar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { display: 'horizontal' };
+  }
+
   componentDidMount() {
     const { initEvents } = this.props;
 
     initEvents();
+
+    const node = findDOMNode(this);
+    this.setState({ display: node.offsetWidth <= 700 ? 'vertical' : 'horizontal' });
+    ResizeSensor(node, () => {
+      // TODO 700 should be a prop as well
+      this.setState({ display: node.offsetWidth <= 700 ? 'vertical' : 'horizontal' });
+    });
   }
 
   renderView() {
@@ -50,12 +64,16 @@ export default class Calendar extends Component {
     return header;
   }
 
+  displayClass() {
+    return `fc-calendar-container ${this.state.display}`
+  }
+
   render() {
     const { onBack, onToday, onForward, showDayView,
             showWeekView, showMonthView, view } = this.props;
 
     return (
-      <div className='fc-calendar-container'>
+      <div className={this.displayClass()}>
         <div className='row'>
           <div className='col-sm-5'>
             {this.renderHeader()}

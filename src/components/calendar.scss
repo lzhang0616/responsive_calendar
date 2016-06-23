@@ -81,8 +81,7 @@ $border_color: #ddd;
   float: left;
   height: 100%;
   width: 14.28%;
-  width: -moz-calc(100%/7);
-  width: -webkit-calc(100%/7);
+  width: calc(100%/7);
   position: relative;
 }
 
@@ -91,7 +90,7 @@ $border_color: #ddd;
   border-right: none;
 }
 
-@media screen and (max-width: 880px) {
+.vertical {
   .fc-calendar-container,
   .fc-calendar,
   .fc-calendar .fc-head,
