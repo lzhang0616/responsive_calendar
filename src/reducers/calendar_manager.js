@@ -12,24 +12,24 @@ const calendarManager = (state = calendarManagerInit, action) => {
   switch (type) {
     case BACK_IN_DATE:
       const prevDate = date.add(-1, view);
-      newState = Object.assign({}, state, { date: prevDate, selected: prevDate });
+      newState = { ...state, date: prevDate, selected: prevDate };
       break;
       case BACK_TO_TODAY:
       const current = today();
-      newState = Object.assign({}, state, { date: current, selected: current });
+      newState = { ...state, date: current, selected: current };
       break;
     case FORWARD_IN_DATE:
       const nextDate = date.add(1, view);
-      newState = Object.assign({}, state, { date: nextDate, selected: nextDate });
+      newState = { ...state, date: nextDate, selected: nextDate };
       break;
     case SHOW_DAY_VIEW:
-      newState = Object.assign({}, state, { view: 'day' });
+      newState = { ...state, view: 'day' };
       break;
     case SHOW_WEEK_VIEW:
-      newState = Object.assign({}, state, { view: 'week' });
+      newState = { ...state, view: 'week' };
       break;
     case SHOW_MONTH_VIEW:
-      newState = Object.assign({}, state, { view: 'month' });
+      newState = { ...state, view: 'month' };
       break;
     default:
       break;

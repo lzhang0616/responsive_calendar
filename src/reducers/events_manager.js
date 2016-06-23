@@ -11,7 +11,7 @@ const eventsManager = (state = eventsManagerInit, action) => {
     case INIT_EVENTS:
       // Combine new events with original, remove duplicates:
       const newEvents = _.uniqBy(state.events.concat(events), event => event.id);
-      newState = Object.assign({}, state, { events: newEvents });
+      newState = { ...state, events: newEvents};
       break;
     default:
       break;
