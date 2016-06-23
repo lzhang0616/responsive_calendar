@@ -9,6 +9,10 @@ export const weekday = number => moment().weekday(number);
 
 export const today = () => moment().startOf('day');
 
+export const flattenState = ({ calendarManager, eventsManager }) => {
+  return { ...calendarManager, ...eventsManager };
+};
+
 export const getStartDate = (date, view) => {
   let startDate;
 

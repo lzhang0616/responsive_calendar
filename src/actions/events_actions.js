@@ -1,7 +1,6 @@
-import { INIT_EVENTS, UPDATE_EVENTS } from './actions_types';
 import fetch from 'isomorphic-fetch';
-import { flattenState } from '../utilities/store_helpers';
-import { getStartDate, getEndDate } from '../utilities/calendar_helpers';
+import { INIT_EVENTS, UPDATE_EVENTS } from './actions_types';
+import { getStartDate, getEndDate, flattenState } from '../utilities/calendar_helpers';
 
 const updateEvents = (events, init, firstFetch) => {
   let type;
