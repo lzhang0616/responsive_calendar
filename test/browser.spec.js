@@ -2,6 +2,7 @@
 
 import Browser from 'zombie';
 import moment from 'moment';
+import server from '../dev_server.js';
 
 Browser.localhost('example.com', 3333);
 
