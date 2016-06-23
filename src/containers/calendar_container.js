@@ -38,9 +38,7 @@ const mapStateToProps = state => {
   return props;
 };
 
-const batch = (dispatch, actions) => {
-  actions.forEach(action => dispatch(action));
-};
+const batch = (dispatch, actions) => actions.forEach(action => dispatch(action));
 
 const mapDispatchToProps = dispatch => {
   return {
