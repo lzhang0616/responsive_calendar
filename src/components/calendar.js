@@ -13,7 +13,10 @@ import './calendar.scss';
 export default class Calendar extends Component {
   constructor(props) {
     super(props);
-    this.state = { display: 'horizontal' };
+    this.state = {
+      embedded: props.width && props.height,
+      display: 'horizontal'
+    };
   }
 
   componentDidMount() {
@@ -61,16 +64,20 @@ export default class Calendar extends Component {
   }
 
   displayClass() {
-    return `fc-calendar-container ${this.state.display}`;
+    return `fc-calendar-container ${this.state.display} ${this.state.embedded ? 'embedded' : ''}`;
   }
 
   render() {
     const { onBack, onToday, onForward, showDayView,
             showWeekView, showMonthView, view } = this.props;
-
+    // TODO optional
+    const style = {
+      maxWidth: this.props.width,
+      maxHeight: this.props.height
+    };
     return (
-      <div className={this.displayClass()}>
-        <div className='row'>
+      <div className={this.displayClass()} style={style}>
+        <header className='row'>
           <div className='col-sm-5'>
             {this.renderHeader()}
           </div>
@@ -80,8 +87,10 @@ export default class Calendar extends Component {
             <ViewControls viewControlsClass='h2 pull-right' showDayView={showDayView}
               showWeekView={showWeekView} showMonthView={showMonthView} view={view} />
           </div>
-        </div>
-        {this.renderView()}
+        </header>
+        <section>
+          {this.renderView()}
+        </section>
       </div>
     );
   }
