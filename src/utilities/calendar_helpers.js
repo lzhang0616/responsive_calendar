@@ -56,6 +56,8 @@ export const getEndDate = (date, view) => {
   return endDate;
 };
 
+export const getRange = (date, view) => [ getStartDate(date, view), getEndDate(date, view) ];
+
 const getTense = (date, today) => {
   let tense = '';
 
