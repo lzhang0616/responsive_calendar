@@ -46,8 +46,7 @@ const mapDispatchToProps = dispatch => {
     onForward: view => batch(dispatch, [ forwardInDate(view), fetchEventSources() ]),
     showDayView: () => batch(dispatch, [ showDayView(), fetchEventSources() ]),
     showWeekView: () => batch(dispatch, [ showWeekView(), fetchEventSources() ]),
-    showMonthView: () => batch(dispatch, [ showMonthView(), fetchEventSources() ]),
-    initEvents: () => dispatch(fetchEventSources(true))
+    showMonthView: () => batch(dispatch, [ showMonthView(), fetchEventSources() ])
   };
 };
 
