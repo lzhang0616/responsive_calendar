@@ -1,6 +1,6 @@
+import _ from 'lodash';
 import { eventsManagerInit } from '../store/default_initial_state';
 import { INIT_EVENTS, UPDATE_EVENTS } from '../actions/actions_types';
-import _ from 'lodash';
 
 const repopulateEvents = (state, events) => {
   return { ...state, events };
