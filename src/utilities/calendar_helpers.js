@@ -72,7 +72,7 @@ const getTense = (date, today) => {
   return tense;
 };
 
-export const getDays = ({ date, view, events, selected }) => {
+export const getDays = ({ date, view, events, selected, eventDateFormatter }) => {
   let current;
   let day;
   const startDate = getStartDate(date, view).clone();
@@ -89,7 +89,7 @@ export const getDays = ({ date, view, events, selected }) => {
       date: current.toDate(),
       tense: getTense(current, today),
       first: current.date() === 1,
-      events: eventsByDay[current.format('YYYY-MM-DD')] || [],
+      events: eventsByDay[current.format(eventDateFormatter)] || [],
       selected
     };
 
