@@ -27,6 +27,7 @@ export const eventsManagerInit = {
   endQueryParam: 'end',
   dateFormatter: 'YYYY-MM-DD',
   eventDateFormatter: 'YYYY-MM-DD',
+  eventGroupByKey: 'date',
   cachedStart,
   cachedEnd
 };

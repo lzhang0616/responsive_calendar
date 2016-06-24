@@ -65,8 +65,18 @@ const sourceUrl = (source, state, newStart, newEnd, init) => {
 export const fetchEvent = (source, init, payload) => {
   const { newStart, newEnd } = payload;
 
+  const fetchHeaders = new Headers({
+    'Content-Type': 'application/json'
+  });
+
+  const fetchInit = {
+    method: 'GET',
+    headers: fetchHeaders,
+    credentials: 'same-origin'
+  };
+
   return (dispatch, getState) => {
-    return fetch(sourceUrl(source, getState(), newStart, newEnd, init))
+    return fetch(sourceUrl(source, getState(), newStart, newEnd, init), fetchInit)
       .then(response => response.json())
       .then(events => dispatch(updateEvents(init, { ...payload, events })))
       .catch(err => console.error(err));
