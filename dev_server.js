@@ -23,7 +23,15 @@ app.use(webpackHotMiddleware(compiler));
 
 // Mock APIs
 let _ = require('lodash');
+let moment = require('moment');
 let data = require('./dev_data.json');
+
+// Calculates event date based on an offset, so that we can test easier.
+data.map(event => {
+  event.date = moment().add(event.offset, 'days').format('YYYY-MM-DD');
+  delete event.offset;
+  return event;
+})
 
 function getEvents(start, end, type) {
   var events = data;

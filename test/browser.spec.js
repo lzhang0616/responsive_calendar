@@ -22,6 +22,10 @@ describe('User visits calendar page', () => {
       browser.assert.text('header h2', monthLabel);
       browser.assert.element('.fc-month-view');
     });
+
+    it('should see the correct events', () => {
+      browser.assert.elements('.fc-event', 11);
+    });
   });
 
   describe('clicks forward', () => {
@@ -36,8 +40,7 @@ describe('User visits calendar page', () => {
     });
 
     it('should see the correct events', () => {
-      // TODO dev_data.json event dates are hardcoded, this will break:
-      browser.assert.elements('.fc-event', 8);
+      browser.assert.elements('.fc-event', 10);
     });
   });
 
@@ -53,7 +56,7 @@ describe('User visits calendar page', () => {
     });
 
     it('should see the correct events', () => {
-      browser.assert.elements('.fc-event', 7);
+      browser.assert.elements('.fc-event', 11);
     });
   });
 
@@ -71,8 +74,7 @@ describe('User visits calendar page', () => {
     });
 
     it('should see the correct events', () => {
-      browser.assert.elements('.fc-event', 1);
-      browser.assert.text('.fc-event', 'Lucy');
+      browser.assert.elements('.fc-event', 2);
     });
   });
 
@@ -88,12 +90,9 @@ describe('User visits calendar page', () => {
     });
 
     it('should see the correct events', () => {
-      browser.assert.elements('.fc-event', 1);
-      browser.assert.text('.fc-event', 'Eye Exam');
+      browser.assert.elements('.fc-event', 2);
     });
   });
-
-  // Today
 
   describe('clicks Today', () => {
     const dateLabel = moment().format('MMMM YYYY');
@@ -106,8 +105,7 @@ describe('User visits calendar page', () => {
     });
 
     it('should see the correct events', () => {
-      browser.assert.elements('.fc-event', 1);
-      browser.assert.text('.fc-event', 'Lucy');
+      browser.assert.elements('.fc-event', 2);
     });
   });
 
@@ -125,7 +123,8 @@ describe('User visits calendar page', () => {
     });
 
     it('should see the correct events', () => {
-      browser.assert.elements('.fc-event', 0);
+      browser.assert.elements('.fc-event', 1);
+      browser.assert.text('.fc-event', 'Ricky Ricardo');
     });
   });
 
@@ -141,8 +140,23 @@ describe('User visits calendar page', () => {
     });
 
     it('should see the correct events', () => {
+      browser.assert.elements('.fc-event', 0);
+    });
+  });
+
+  describe('clicks Today', () => {
+    const dateLabel = moment().format('MMMM D, YYYY');
+    before(done => {
+      browser.pressButton('.today', done);
+    });
+
+    it('should see the current month', () => {
+      browser.assert.text('header h2', dateLabel);
+    });
+
+    it('should see the correct events', () => {
       browser.assert.elements('.fc-event', 1);
-      browser.assert.text('.fc-event', 'Lucy');
+      browser.assert.text('.fc-event', 'Ricky Ricardo');
     });
   });
 });
