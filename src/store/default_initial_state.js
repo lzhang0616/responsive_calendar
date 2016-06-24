@@ -22,10 +22,11 @@ export const calendarManagerInit = {
 
 export const eventsManagerInit = {
   events: [],
-  eventSources: ['/calendar/events'],
+  eventSources: [],
   startQueryParam: 'start',
   endQueryParam: 'end',
   dateFormatter: 'YYYY-MM-DD',
+  eventDateFormatter: 'YYYY-MM-DD',
   cachedStart,
   cachedEnd
 };

@@ -9,8 +9,15 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
   </head>
   <body>
-    <div id="root" class="container"></div>
+    <div id="main" class="container"></div>
   </body>
   <script src="/bundle.js"></script>
-  <script>responsiveCalendar.calendar()</script>
+  <script>
+   responsiveCalendar.calendar({
+     renderDivId: 'main',
+     defaultView: 'month',
+     dateFormatter: 'YYYY-MM-DD',
+     eventSources: ['/calendar/events']
+   });
+  </script>
 </html>
