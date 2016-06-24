@@ -16,15 +16,15 @@ export default class ViewControls extends Component {
 
     return (
       <div className={className}>
-        <button className={`btn btn-default ${this.renderButtonClass('day')}`}
+        <button className={`btn btn-default day ${this.renderButtonClass('day')}`}
           onClick={showDayView}>
           Day
         </button>
-        <button className={`btn btn-default ${this.renderButtonClass('week')}`}
+        <button className={`btn btn-default week ${this.renderButtonClass('week')}`}
           onClick={showWeekView}>
           Week
         </button>
-        <button className={`btn btn-default ${this.renderButtonClass('month')}`}
+        <button className={`btn btn-default month ${this.renderButtonClass('month')}`}
           onClick={showMonthView}>
           Month
         </button>
