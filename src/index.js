@@ -12,7 +12,7 @@ export default class ResponsiveCalendar extends Component {
     return (
       <Provider store={store}>
         <CalendarContainer {...options}/>
-      </Provider>,
+      </Provider>
     );
   }
 }
