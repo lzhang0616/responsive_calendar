@@ -14,7 +14,7 @@ const defaultOptions = {
 export const calendar = (options = {}) => {
   const mergedOptions = { ...defaultOptions, ...options };
   const { renderDivId, dateFormatter, eventDateFormatter,
-          startQueryParam, endQueryParam, defaultView, eventSources } = mergedOptions;
+          startQueryParam, endQueryParam, defaultView, eventSources, eventGroupByKey } = mergedOptions;
   const { calendarManager, eventsManager } = defaultInitialState;
 
   if (defaultView) {
@@ -27,6 +27,7 @@ export const calendar = (options = {}) => {
   if (eventDateFormatter) eventsManager.eventDateFormatter = eventDateFormatter;
   if (startQueryParam) eventsManager.startQueryParam = startQueryParam;
   if (endQueryParam) eventsManager.endQueryParam = endQueryParam;
+  if (eventGroupByKey) eventsManager.eventGroupByKey = eventGroupByKey;
 
   if (eventSources) {
     if (!Array.isArray(eventSources)) throw 'EventSources must be an array of source URLs';

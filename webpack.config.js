@@ -22,7 +22,7 @@ module.exports = {
       ],
       loader: "babel-loader",
       query: {
-        presets: ['es2015-webpack', 'react', 'react-hmre', 'stage-1', 'stage-2'],
+        presets: ['es2015-webpack', 'react', 'stage-1', 'stage-2'],
         plugins: ['transform-object-assign']
       }
     },
