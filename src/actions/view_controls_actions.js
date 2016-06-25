@@ -1,4 +1,5 @@
-import { SHOW_DAY_VIEW, SHOW_WEEK_VIEW, SHOW_MONTH_VIEW } from './actions_types';
+import { SHOW_DAY_VIEW, SHOW_WEEK_VIEW,
+         SHOW_MONTH_VIEW, UPDATE_VIEW } from './actions_types';
 
 export const showDayView = () => {
   return {
@@ -15,5 +16,12 @@ export const showWeekView = () => {
 export const showMonthView = () => {
   return {
     type: SHOW_MONTH_VIEW
+  };
+};
+
+export const updateView = view => {
+  return {
+    type: UPDATE_VIEW,
+    view
   };
 };
