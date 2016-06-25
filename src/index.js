@@ -1,9 +1,11 @@
 import 'babel-polyfill';
+import page from 'page';
 import React, { Component } from 'react';
 import CalendarContainer from './containers/calendar_container';
 import thunkMiddleware from 'redux-thunk';
 import calendarApp from './reducers/calendar_app';
 import defaultInitialState from './store/default_initial_state';
+import { getRange, flattenState } from './utilities/calendar_helpers';
 import { createStore, applyMiddleware } from 'redux';
 import { fetchEventSources } from './actions/events_actions';
 import { Provider } from 'react-redux';
@@ -15,6 +17,8 @@ export default class ResponsiveCalendar extends Component {
     const { options } = this.props;
     const customizedOptions = customizeInitState(options);
     const { store } = customizedOptions;
+
+    setupHashRoutes(store);
 
     return (
       <Provider store={store}>
@@ -58,4 +62,18 @@ const customizeInitState = options => {
   store.dispatch(fetchEventSources(true));
 
   return { store };
+};
+
+const setupHashRoutes = (store) => {
+  const { getState, subscribe } = store;
+
+  page.base('/#');
+  page('/:view/:start/:end', () => {});
+
+  subscribe(() => {
+    const { view, date } = flattenState(getState());
+    const [ start, end ] = getRange(date, view).map(day => day.format('YYYY-MM-DD'));
+
+    page(`/${view}/${start}/${end}`);
+  });
 };
