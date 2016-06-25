@@ -1,9 +1,12 @@
 import _ from 'lodash';
 import { eventsManagerInit } from '../store/default_initial_state';
-import { INIT_EVENTS, UPDATE_EVENTS } from '../actions/actions_types';
+import { INIT_EVENTS, UPDATE_EVENTS, UPDATE_EVENT_SOURCES,
+         UPDATE_EVENTS_META } from '../actions/actions_types';
 
-const repopulateEvents = (state, events) => {
-  return { ...state, events };
+const updateMeta = (state, metaShouldUpdate) => {
+  const { eventsMetaData, ...others } = state;
+  const updatedMeta = { ...eventsMetaData, ...metaShouldUpdate };
+  return { ...others, eventsMetaData: updatedMeta };
 };
 
 const concatEvents = (state, events) => {
@@ -13,7 +16,8 @@ const concatEvents = (state, events) => {
 };
 
 const eventsManager = (state = eventsManagerInit,
-                       {type, events, firstFetch, lastFetch, newStart, newEnd}) => {
+                       { type, events, eventSources, firstFetch,
+                         lastFetch, newStart, newEnd, metaShouldUpdate }) => {
   let newState = state;
 
   switch (type) {
@@ -21,11 +25,17 @@ const eventsManager = (state = eventsManagerInit,
     case UPDATE_EVENTS:
       newState = concatEvents(state, events);
       break;
+    case UPDATE_EVENT_SOURCES:
+      newState = { ...state, eventSources };
+      break;
+    case UPDATE_EVENTS_META:
+      newState = updateMeta(state, metaShouldUpdate);
+      break;
     default:
       break;
   }
 
-  if (lastFetch) newState = { ...newState, cachedStart: newStart, cachedEnd: newEnd };
+  if (lastFetch) newState = updateMeta(newState, { cachedStart: newStart, cachedEnd: newEnd });
 
   return newState;
 };

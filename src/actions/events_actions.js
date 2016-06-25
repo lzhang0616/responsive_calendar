@@ -1,6 +1,21 @@
 import fetch from 'isomorphic-fetch';
-import { INIT_EVENTS, UPDATE_EVENTS } from './actions_types';
+import { INIT_EVENTS, UPDATE_EVENTS, UPDATE_EVENT_SOURCES,
+         UPDATE_EVENTS_META } from './actions_types';
 import { getRange, flattenState } from '../utilities/calendar_helpers';
+
+export const updateEventSources = eventSources => {
+  return {
+    type: UPDATE_EVENT_SOURCES,
+    eventSources
+  };
+};
+
+export const updateEventsMeta = metaShouldUpdate => {
+  return {
+    type: UPDATE_EVENTS_META,
+    metaShouldUpdate
+  };
+};
 
 const updateEvents = (init, payload) => {
   let type;

@@ -23,17 +23,18 @@ export const calendarManagerInit = {
 export const eventsManagerInit = {
   events: [],
   eventSources: [],
-  startQueryParam: 'start',
-  endQueryParam: 'end',
-  dateFormatter: 'YYYY-MM-DD',
-  eventDateFormatter: 'YYYY-MM-DD',
-  eventGroupByKey: 'date',
-  cachedStart,
-  cachedEnd
+  eventsMetaData: {
+    startQueryParam: 'start',
+    endQueryParam: 'end',
+    dateFormatter: 'YYYY-MM-DD',
+    eventDateFormatter: 'YYYY-MM-DD',
+    eventGroupByKey: 'date',
+    cachedStart,
+    cachedEnd
+  }
 };
 
 export default {
   calendarManager: calendarManagerInit,
   eventsManager: eventsManagerInit
 };
-
