@@ -13,7 +13,10 @@
     "url": "git@github.com:lzhang0616/responsive_calendar.git"
   },
   "keywords": [
-    "calendar", "responsive", "react", "redux"
+    "calendar",
+    "responsive",
+    "react",
+    "redux"
   ],
   "author": "Li Zhang, Gary Thomas",
   "license": "MIT",
@@ -35,6 +38,7 @@
     "jquery": "~2.2.4",
     "lodash": "~4.13.1",
     "moment": "~2.13.0",
+    "page": "~1.7.1",
     "react": "~0.14.8",
     "react-dom": "~0.14.8",
     "react-redux": "~4.4.5",
