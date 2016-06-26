@@ -2,9 +2,17 @@ import fetch from 'isomorphic-fetch';
 import { INIT_EVENTS, UPDATE_EVENTS, UPDATE_EVENT_SOURCES,
          UPDATE_EVENTS_META } from './actions_types';
 import { getRange, flattenState, getCachedStart,
-         getCachedEnd } from '../utilities/calendar_helpers';
+         getCachedEnd, windowSize, windowSizeUnit } from '../utilities/calendar_helpers';
 
-const windowSize = 2;
+const fetchHeaders = new Headers({
+  'Content-Type': 'application/json; charset=utf-8'
+});
+
+const fetchInit = {
+  method: 'GET',
+  headers: fetchHeaders,
+  credentials: 'same-origin'
+};
 
 export const updateEventSources = eventSources => {
   return {
@@ -33,15 +41,15 @@ const updateEvents = (init, payload) => {
 
 const getNewWindowStart = start => {
   return start.clone()
-    .add(-1 * windowSize, 'month')
-    .startOf('month')
+    .add(-1 * windowSize, windowSizeUnit)
+    .startOf(windowSizeUnit)
     .startOf('week');
 };
 
 const getNewWindowEnd = end => {
   return end.clone()
-    .add(windowSize - 1, 'month')
-    .endOf('month')
+    .add(windowSize, windowSizeUnit)
+    .endOf(windowSizeUnit)
     .add(1, 'week')
     .endOf('week');
 };
@@ -95,16 +103,6 @@ const sourceUrl = (source, state, newStart, newEnd, init) => {
 
 export const fetchEvent = (source, init, payload) => {
   const { newStart, newEnd } = payload;
-
-  const fetchHeaders = new Headers({
-    'Content-Type': 'application/json'
-  });
-
-  const fetchInit = {
-    method: 'GET',
-    headers: fetchHeaders,
-    credentials: 'same-origin'
-  };
 
   return (dispatch, getState) => {
     return fetch(sourceUrl(source, getState(), newStart, newEnd, init), fetchInit)
