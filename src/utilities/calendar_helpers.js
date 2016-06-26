@@ -1,6 +1,9 @@
 import moment from 'moment';
 import _ from 'lodash';
 
+export const windowSize = 2;
+export const windowSizeUnit = 'month';
+
 export const datetime = (date, format) => moment(date).format(format);
 
 export const fromNow = date => moment(date).fromNow();
@@ -11,15 +14,15 @@ export const today = () => moment().startOf('day');
 
 export const getCachedStart = date => {
   return date.clone()
-    .add(-1, 'month')
-    .startOf('month')
+    .add(-1, windowSizeUnit)
+    .startOf(windowSizeUnit)
     .startOf('week');
 };
 
 export const getCachedEnd = date => {
   return date.clone()
-    .add(1, 'month')
-    .endOf('month')
+    .add(1, windowSizeUnit)
+    .endOf(windowSizeUnit)
     .add(1, 'week')
     .endOf('week');
 };
@@ -36,10 +39,13 @@ export const getStartDate = (date, view) => {
 
   switch (view) {
     case 'month':
-      startDate = moment(date).startOf('month').startOf('week');
+      startDate = moment(date)
+        .startOf('month')
+        .startOf('week');
       break;
     case 'week':
-      startDate = moment(date).startOf('week');
+      startDate = moment(date)
+        .startOf('week');
       break;
     case 'day':
       startDate = date;
@@ -62,7 +68,8 @@ export const getEndDate = (date, view) => {
         .endOf('week');
         break;
     case 'week':
-      endDate = moment(date).endOf('week');
+      endDate = moment(date)
+        .endOf('week');
       break;
     case 'day':
       endDate = date;
