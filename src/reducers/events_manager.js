@@ -22,6 +22,9 @@ const eventsManager = (state = eventsManagerInit,
 
   switch (type) {
     case INIT_EVENTS:
+      if (firstFetch) newState = { ...state, events: [] };
+      newState = concatEvents(state, events);
+      break;
     case UPDATE_EVENTS:
       newState = concatEvents(state, events);
       break;

@@ -1,7 +1,10 @@
 import fetch from 'isomorphic-fetch';
 import { INIT_EVENTS, UPDATE_EVENTS, UPDATE_EVENT_SOURCES,
          UPDATE_EVENTS_META } from './actions_types';
-import { getRange, flattenState } from '../utilities/calendar_helpers';
+import { getRange, flattenState, getCachedStart,
+         getCachedEnd } from '../utilities/calendar_helpers';
+
+const windowSize = 2;
 
 export const updateEventSources = eventSources => {
   return {
@@ -28,28 +31,41 @@ const updateEvents = (init, payload) => {
   return { ...payload, type };
 };
 
+const getNewWindowStart = start => {
+  return start.clone()
+    .add(-1 * windowSize, 'month')
+    .startOf('month')
+    .startOf('week');
+};
+
+const getNewWindowEnd = end => {
+  return end.clone()
+    .add(windowSize - 1, 'month')
+    .endOf('month')
+    .add(1, 'week')
+    .endOf('week');
+};
+
+const shouldInit = (start, end, cachedStart, cachedEnd, date) => {
+  const newStart = getNewWindowStart(cachedStart);
+  const newEnd = getNewWindowEnd(cachedEnd);
+
+  if (start.isBefore(newStart) || end.isAfter(newEnd)) return true;
+
+  return false;
+};
+
 const getNewRange = (start, end, cachedStart, cachedEnd, init) => {
   let newStart = cachedStart.clone();
   let newEnd = cachedEnd.clone();
 
-  if (init) return [ cachedStart, cachedEnd ];
+  if (init) return [ newStart, newEnd ];
 
   if (start.isSameOrAfter(cachedStart) && end.isSameOrBefore(cachedEnd)) return [];
 
-  if (start.isBefore(cachedStart)) {
-    newStart = newStart
-      .add(-2, 'month')
-      .startOf('month')
-      .startOf('week');
-  }
+  if (start.isBefore(cachedStart)) newStart = getNewWindowStart(cachedStart);
 
-  if (end.isAfter(cachedEnd)) {
-    newEnd = newEnd
-      .add(2, 'month')
-      .endOf('month')
-      .add(1, 'week')
-      .endOf('week');
-  }
+  if (end.isAfter(cachedEnd)) newEnd = getNewWindowEnd(cachedEnd);
 
   return [ newStart, newEnd ];
 };
@@ -102,6 +118,16 @@ export const fetchEventSources = (init = false, index = 0) => {
   return (dispatch, getState) => {
     const { eventSources, cachedStart, cachedEnd, date, view } = flattenState(getState());
     const [ start, end ] = getRange(date, view);
+
+    if (shouldInit(start, end, cachedStart, cachedEnd, date)) {
+      dispatch(updateEventsMeta({
+        cachedStart: getCachedStart(date),
+        cachedEnd: getCachedEnd(date)
+      }));
+
+      return dispatch(fetchEventSources(true));
+    }
+
     const [ newStart, newEnd ] = getNewRange(start, end, cachedStart, cachedEnd, init);
     let len = eventSources.length;
 

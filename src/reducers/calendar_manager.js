@@ -2,10 +2,10 @@ import { today } from '../utilities/calendar_helpers';
 import { calendarManagerInit } from '../store/default_initial_state';
 import { BACK_IN_DATE, BACK_TO_TODAY, FORWARD_IN_DATE,
          SHOW_DAY_VIEW, SHOW_WEEK_VIEW,
-         SHOW_MONTH_VIEW, UPDATE_VIEW } from '../actions/actions_types';
+         SHOW_MONTH_VIEW, UPDATE_VIEW, UPDATE_DATE } from '../actions/actions_types';
 
 const calendarManager = (state = calendarManagerInit, action) => {
-  const { type, view } = action;
+  const { type, view, newDate } = action;
   const { date } = state;
 
   let newState = state;
@@ -34,6 +34,9 @@ const calendarManager = (state = calendarManagerInit, action) => {
       break;
     case UPDATE_VIEW:
       newState = { ...state, view };
+      break;
+    case UPDATE_DATE:
+      newState = { ...state, date: newDate };
       break;
     default:
       break;
