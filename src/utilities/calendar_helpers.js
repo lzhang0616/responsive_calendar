@@ -9,6 +9,22 @@ export const weekday = number => moment().weekday(number);
 
 export const today = () => moment().startOf('day');
 
+export const getCachedStart = date => {
+  return date.clone()
+    .add(-1, 'month')
+    .startOf('month')
+    .startOf('week');
+};
+
+export const getCachedEnd = date => {
+  return date.clone()
+    .add(1, 'month')
+    .endOf('month')
+    .add(1, 'week')
+    .endOf('week');
+};
+
+
 export const flattenState = ({ calendarManager, eventsManager }) => {
   const { eventsMetaData, ...others } = eventsManager;
 

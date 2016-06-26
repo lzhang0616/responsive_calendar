@@ -72,23 +72,28 @@ const customizeState = (options, store) => {
   dispatch(fetchEventSources(true));
 };
 
-const dispatchAction = (cxt, next) => {
+const dispatchActions = (cxt, next) => {
   const { date, view } = cxt.params;
   const { dispatch, getState } = store;
-  const flatState = flattenState(getState());
   const newDate = moment(date, ['YYYY-MM-DD'], true);
+
+  const flatState = flattenState(getState());
+  const viewChanged = ( view !== flatState.view );
+  const dateChanged = (newDate.isValid() && !newDate.isSame(flatState.date));
 
   if (['day', 'week', 'month'].indexOf(view) < 0) throw `view type: ${view}`;
 
-  if (view !== flatState.view) dispatch(updateView(view));
-  if (newDate.isValid() && !newDate.isSame(flatState.date)) dispatch(updateDate(newDate));
+  if (dateChanged) dispatch(updateDate(newDate));
+  if (viewChanged) dispatch(updateView(view));
+
+  if (dateChanged || viewChanged) dispatch(fetchEventSources());
 };
 
 const setupHashRoutes = store => {
   const { getState, subscribe } = store;
 
   page.base('/#');
-  page('/:date/:view', dispatchAction);
+  page('/:date/:view', dispatchActions);
   page();
 
   subscribe(() => {
