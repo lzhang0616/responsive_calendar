@@ -105,8 +105,11 @@ export const fetchEvent = (source, init, payload) => {
   const { newStart, newEnd } = payload;
 
   return (dispatch, getState) => {
+    const { eventDataTransform } = flattenState(getState());
+
     return fetch(sourceUrl(source, getState(), newStart, newEnd, init), fetchInit)
       .then(response => response.json())
+      .then(eventDataTransform)
       .then(events => dispatch(updateEvents(init, { ...payload, events })))
       .catch(err => console.error(err));
   };

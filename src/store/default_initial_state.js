@@ -15,6 +15,7 @@ export const eventsManagerInit = {
     startQueryParam: 'start',
     endQueryParam: 'end',
     dateFormatter: 'YYYY-MM-DD',
+    eventDataTransform: events => events,
     eventDateFormatter: 'YYYY-MM-DD',
     eventGroupByKey: 'date',
     cachedStart: getCachedStart(date),

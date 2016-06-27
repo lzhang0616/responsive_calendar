@@ -1,4 +1,5 @@
 import 'babel-polyfill';
+import _ from 'lodash';
 import page from 'page';
 import moment from 'moment';
 import React, { Component } from 'react';
@@ -45,7 +46,8 @@ export default class ResponsiveCalendar extends Component {
 
 const customizeState = (options, store) => {
   const { renderDivId, dateFormatter, eventDateFormatter,
-          startQueryParam, endQueryParam, defaultView, eventSources, eventGroupByKey } = options;
+          startQueryParam, endQueryParam, defaultView, eventSources,
+          eventGroupByKey, eventDataTransform } = options;
   const { dispatch } = store;
   const eventsMetaData = {};
 
@@ -66,6 +68,12 @@ const customizeState = (options, store) => {
   if (startQueryParam) eventsMetaData.startQueryParam = startQueryParam;
   if (endQueryParam) eventsMetaData.endQueryParam = endQueryParam;
   if (eventGroupByKey) eventsMetaData.eventGroupByKey = eventGroupByKey;
+
+  if (eventDataTransform) {
+    if (!_.isFunction(eventDataTransform)) throw `eventDataTransform must be a function`;
+
+    eventsMetaData.eventDataTransform = eventDataTransform;
+  }
 
   dispatch(updateEventsMeta(eventsMetaData));
 
