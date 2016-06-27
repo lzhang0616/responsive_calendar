@@ -6,7 +6,7 @@ import CalendarContainer from './containers/calendar_container';
 import thunkMiddleware from 'redux-thunk';
 import calendarApp from './reducers/calendar_app';
 import defaultInitialState from './store/default_initial_state';
-import { flattenState } from './utilities/calendar_helpers';
+import { today, flattenState } from './utilities/calendar_helpers';
 import { updateView } from './actions/view_controls_actions';
 import { updateDate } from './actions/calendar_controls_actions';
 import { updateEventSources, updateEventsMeta } from './actions/events_actions';
@@ -75,7 +75,9 @@ const customizeState = (options, store) => {
 const dispatchActions = (cxt, next) => {
   const { date, view } = cxt.params;
   const { dispatch, getState } = store;
-  const newDate = moment(date, ['YYYY-MM-DD'], true);
+
+  let newDate = date === 'today' ? today() : date;
+  newDate = moment(newDate, ['YYYY-MM-DD'], true);
 
   const flatState = flattenState(getState());
   const viewChanged = ( view !== flatState.view );
