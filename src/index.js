@@ -28,7 +28,7 @@ const store = createStore(
 export default class ResponsiveCalendar extends Component {
   componentWillMount() {
     customizeState(this.props.options, store);
-    setupHashRoutes(store);
+    new hashRoutesLoader(store).setupHashRoutes();
   }
 
   componentDidUpdate() {
@@ -80,8 +80,7 @@ const customizeState = (options, store) => {
   dispatch(fetchEventSources(true));
 };
 
-const dispatchActions = (cxt, next) => {
-  const { date, view } = cxt.params;
+const dispatchActions = (date, view) => {
   const { dispatch, getState } = store;
 
   let newDate = date === 'today' ? today() : date;
@@ -99,16 +98,32 @@ const dispatchActions = (cxt, next) => {
   if (dateChanged || viewChanged) dispatch(fetchEventSources());
 };
 
-const setupHashRoutes = store => {
-  const { getState, subscribe } = store;
+class hashRoutesLoader {
+  constructor(store) {
+    this.store = store;
+    this.prevDate = '';
+    this.prevView = '';
+  }
 
-  page.base('/#');
-  page('/:date/:view', dispatchActions);
-  page();
+  setupHashRoutes() {
+    const { getState, subscribe } = this.store;
 
-  subscribe(() => {
-    const { view, date } = flattenState(getState());
+    page.base('/#');
+    window.onpopstate = () => {
+      const [ date, view ] = document.location.hash.substring(2).split('/');
+      dispatchActions(date, view);
+    };
 
-    page(`/${date.format('YYYY-MM-DD')}/${view}`);
-  });
-};
+    subscribe(() => {
+      const { view, date } = flattenState(getState());
+      const formattedDate = date.format('YYYY-MM-DD');
+
+      if (formattedDate !== this.prevDate || view !== this.prevView) {
+        page(`/${formattedDate}/${view}`);
+
+        this.prevDate = formattedDate;
+        this.prevView = view;
+      }
+    });
+  };
+}
