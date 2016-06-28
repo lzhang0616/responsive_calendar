@@ -77,5 +77,13 @@
     "webpack-dev-middleware": "~1.5.1",
     "webpack-hot-middleware": "~2.10.0",
     "zombie": "~4.2.1"
+  },
+  "nyc": {
+    "exclude": [
+      "**/*.spec.js",
+      "dev_server.js",
+      "webpack.dev.config.js",
+      "webpack.config.js"
+    ]
   }
 }
