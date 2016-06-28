@@ -28,7 +28,10 @@ let data = require('./dev_data.json');
 
 // Calculates event date based on an offset, so that we can test easier.
 data.map(event => {
-  event.date = moment().add(event.offset, 'days').format('YYYY-MM-DD');
+  event.date = moment()
+                .date(event.date.day)
+                .add(event.date.month, 'months')
+                .format('YYYY-MM-DD');
   delete event.offset;
   return event;
 })
