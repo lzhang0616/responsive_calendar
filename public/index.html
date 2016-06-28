@@ -7,17 +7,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
   </head>
   <body>
     <div id="main" class="container"></div>
   </body>
   <script src="/bundle.js"></script>
   <script>
-   responsiveCalendar.calendar({
-     renderDivId: 'main',
-     defaultView: 'month',
-     dateFormatter: 'YYYY-MM-DD',
-     eventSources: ['/calendar/events']
-   });
+    responsiveCalendar.calendar({
+      renderDivId: 'main',
+      defaultView: 'month',
+      dateFormatter: 'YYYY-MM-DD',
+      eventSources: ['/calendar/events'],
+      dateAndViewUpdated: (date, view) => page(`/${date}/${view}`)
+    });
+
+    page.base('/#');
+
+    const defaultOnpopstate = window.onpopstate;
+
+    window.onpopstate = () => {
+      if (defaultOnpopstate) defaultOnpopstate();
+      const [ date, view ] = document.location.hash.substring(2).split('/');
+      responsiveCalendar.updateViewAndDate(view, date);
+    };
   </script>
 </html>

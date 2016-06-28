@@ -35,10 +35,8 @@
   "dependencies": {
     "babel-polyfill": "~6.9.1",
     "isomorphic-fetch": "~2.2.1",
-    "jquery": "~2.2.4",
     "lodash": "~4.13.1",
     "moment": "~2.13.0",
-    "page": "~1.7.1",
     "react": "~0.14.8",
     "react-dom": "~0.14.8",
     "react-redux": "~4.4.5",
