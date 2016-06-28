@@ -109,7 +109,11 @@ class hashRoutesLoader {
     const { getState, subscribe } = this.store;
 
     page.base('/#');
+
+    const defaultOnpopstate = window.onpopstate;
+
     window.onpopstate = () => {
+      if (defaultOnpopstate) defaultOnpopstate();
       const [ date, view ] = document.location.hash.substring(2).split('/');
       dispatchActions(date, view);
     };
