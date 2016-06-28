@@ -7,7 +7,7 @@ import { BACK_IN_DATE, BACK_TO_TODAY, FORWARD_IN_DATE,
          SHOW_DAY_VIEW, SHOW_WEEK_VIEW,
          SHOW_MONTH_VIEW, UPDATE_VIEW, UPDATE_DATE } from '../../src/actions/actions_types';
 
-describe.only('Calendar manager reducer', () => {
+describe('Calendar manager reducer', () => {
   let state = calendarManager(undefined, {});
 
   it('should return the correct default state', () => {
