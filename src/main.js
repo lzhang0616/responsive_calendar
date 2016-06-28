@@ -1,5 +1,5 @@
 import React from 'react';
-import ResponsiveCalendar from './index';
+import ResponsiveCalendar, { dispatchActions } from './index';
 import { render } from 'react-dom';
 
 const defaultOptions = { renderDivId: 'root' };
@@ -9,7 +9,9 @@ export const calendar = (options = {}) => {
   const { renderDivId, ...others } = mergedOptions;
 
   render(
-    <ResponsiveCalendar options={others} />,
+    <ResponsiveCalendar { ...others } />,
     document.getElementById(renderDivId)
   );
 };
+
+export const updateViewAndDate = dispatchActions;

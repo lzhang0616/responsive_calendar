@@ -1,6 +1,5 @@
 import 'babel-polyfill';
 import _ from 'lodash';
-import page from 'page';
 import moment from 'moment';
 import React, { Component } from 'react';
 import CalendarContainer from './containers/calendar_container';
@@ -27,12 +26,20 @@ const store = createStore(
 
 export default class ResponsiveCalendar extends Component {
   componentWillMount() {
-    customizeState(this.props.options, store);
-    new hashRoutesLoader(store).setupHashRoutes();
+    this.setupConfigs();
   }
 
   componentDidUpdate() {
-    customizeState(this.props.options, store);
+    this.setupConfigs();
+  }
+
+  setupConfigs() {
+    const { dateAndViewUpdated, ...others } = this.props;
+
+    customizeState(others, store);
+
+    const subscriber = new updateSubscriber(store);
+    subscriber.subscribe({ dateAndViewUpdated });
   }
 
   render() {
@@ -43,6 +50,24 @@ export default class ResponsiveCalendar extends Component {
     );
   }
 }
+
+export const dispatchActions = (view, date) => {
+  const { dispatch, getState } = store;
+
+  let newDate = date === 'today' ? today() : date;
+  newDate = moment(newDate, ['YYYY-MM-DD'], true);
+
+  const flatState = flattenState(getState());
+  const viewChanged = ( view !== flatState.view );
+  const dateChanged = (newDate.isValid() && !newDate.isSame(flatState.date));
+
+  if (['day', 'week', 'month'].indexOf(view) < 0) throw `view type: ${view}`;
+
+  if (dateChanged) dispatch(updateDate(newDate));
+  if (viewChanged) dispatch(updateView(view));
+
+  if (dateChanged || viewChanged) dispatch(fetchEventSources());
+};
 
 const customizeState = (options, store) => {
   const { renderDivId, dateFormatter, eventDateFormatter,
@@ -80,50 +105,26 @@ const customizeState = (options, store) => {
   dispatch(fetchEventSources(true));
 };
 
-const dispatchActions = (date, view) => {
-  const { dispatch, getState } = store;
-
-  let newDate = date === 'today' ? today() : date;
-  newDate = moment(newDate, ['YYYY-MM-DD'], true);
-
-  const flatState = flattenState(getState());
-  const viewChanged = ( view !== flatState.view );
-  const dateChanged = (newDate.isValid() && !newDate.isSame(flatState.date));
-
-  if (['day', 'week', 'month'].indexOf(view) < 0) throw `view type: ${view}`;
-
-  if (dateChanged) dispatch(updateDate(newDate));
-  if (viewChanged) dispatch(updateView(view));
-
-  if (dateChanged || viewChanged) dispatch(fetchEventSources());
-};
-
-class hashRoutesLoader {
+class updateSubscriber {
   constructor(store) {
     this.store = store;
     this.prevDate = '';
     this.prevView = '';
   }
 
-  setupHashRoutes() {
+  subscribe({ dateAndViewUpdated }) {
     const { getState, subscribe } = this.store;
-
-    page.base('/#');
-
-    const defaultOnpopstate = window.onpopstate;
-
-    window.onpopstate = () => {
-      if (defaultOnpopstate) defaultOnpopstate();
-      const [ date, view ] = document.location.hash.substring(2).split('/');
-      dispatchActions(date, view);
-    };
 
     subscribe(() => {
       const { view, date } = flattenState(getState());
       const formattedDate = date.format('YYYY-MM-DD');
 
       if (formattedDate !== this.prevDate || view !== this.prevView) {
-        page(`/${formattedDate}/${view}`);
+        if (dateAndViewUpdated) {
+          if (!_.isFunction(dateAndViewUpdated)) throw 'dateAndViewUpdated must be a function';
+
+          dateAndViewUpdated(formattedDate, view);
+        }
 
         this.prevDate = formattedDate;
         this.prevView = view;
