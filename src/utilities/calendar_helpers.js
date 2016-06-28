@@ -23,7 +23,6 @@ export const getCachedEnd = date => {
   return date.clone()
     .add(1, windowSizeUnit)
     .endOf(windowSizeUnit)
-    .add(1, 'week')
     .endOf('week');
 };
 
@@ -64,7 +63,6 @@ export const getEndDate = (date, view) => {
     case 'month':
       endDate = moment(date)
         .endOf('month')
-        .add(1, 'weeks')
         .endOf('week');
         break;
     case 'week':

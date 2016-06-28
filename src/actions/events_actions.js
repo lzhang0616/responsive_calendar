@@ -4,13 +4,11 @@ import { INIT_EVENTS, UPDATE_EVENTS, UPDATE_EVENT_SOURCES,
 import { getRange, flattenState, getCachedStart,
          getCachedEnd, windowSize, windowSizeUnit } from '../utilities/calendar_helpers';
 
-const fetchHeaders = new Headers({
-  'Content-Type': 'application/json; charset=utf-8'
-});
-
 const fetchInit = {
   method: 'GET',
-  headers: fetchHeaders,
+  headers: {
+    'Content-Type': 'application/json; charset=utf-8'
+  },
   credentials: 'same-origin'
 };
 
