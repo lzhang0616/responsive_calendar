@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "node node_modules/eslint/bin/eslint.js src; exit 0",
     "start": "node dev_server.js",
-    "test": "node node_modules/nyc/bin/nyc.js node_modules/mocha/bin/mocha --timeout 10000 --compilers js:babel-register"
+    "test": "node node_modules/nyc/bin/nyc.js node_modules/mocha/bin/mocha --recursive --timeout 10000 --compilers js:babel-register"
   },
   "repository": {
     "type": "git",
@@ -44,6 +44,7 @@
     "redux-thunk": "~2.1.0"
   },
   "devDependencies": {
+    "assert": "^1.4.1",
     "autoprefixer": "~6.3.6",
     "babel-core": "~6.9.0",
     "babel-loader": "~6.2.4",

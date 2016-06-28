@@ -5,8 +5,8 @@ import { BACK_IN_DATE, BACK_TO_TODAY, FORWARD_IN_DATE,
          SHOW_MONTH_VIEW, UPDATE_VIEW, UPDATE_DATE } from '../actions/actions_types';
 
 const calendarManager = (state = calendarManagerInit, action) => {
-  const { type, view, newDate } = action;
-  const { date } = state;
+  const { type, newDate } = action;
+  const { date, view } = state;
 
   let newState = state;
 
@@ -33,7 +33,7 @@ const calendarManager = (state = calendarManagerInit, action) => {
       newState = { ...state, view: 'month' };
       break;
     case UPDATE_VIEW:
-      newState = { ...state, view };
+      newState = { ...state, view: action.view };
       break;
     case UPDATE_DATE:
       newState = { ...state, date: newDate };
