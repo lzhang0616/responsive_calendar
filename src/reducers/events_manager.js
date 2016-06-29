@@ -24,9 +24,15 @@ const eventsManager = (state = eventsManagerInit,
     case INIT_EVENTS:
       if (firstFetch) newState = { ...state, events: [] };
       newState = concatEvents(newState, events);
+      if (lastFetch) newState = updateMeta(newState,
+                                           { cachedStart: newStart,
+                                             cachedEnd: newEnd });
       break;
     case UPDATE_EVENTS:
       newState = concatEvents(state, events);
+      if (lastFetch) newState = updateMeta(newState,
+                                            { cachedStart: newStart,
+                                              cachedEnd: newEnd });
       break;
     case UPDATE_EVENT_SOURCES:
       newState = { ...state, eventSources };
@@ -37,8 +43,6 @@ const eventsManager = (state = eventsManagerInit,
     default:
       break;
   }
-
-  if (lastFetch) newState = updateMeta(newState, { cachedStart: newStart, cachedEnd: newEnd });
 
   return newState;
 };
