@@ -66,6 +66,7 @@
     "express": "~4.13.4",
     "mocha": "~2.5.3",
     "morgan": "~1.7.0",
+    "nightmare": "^2.5.2",
     "node-sass": "~3.8.0",
     "nyc": "~6.6.1",
     "postcss": "~5.0.21",
@@ -74,8 +75,7 @@
     "style-loader": "~0.13.1",
     "webpack": "~2.1.0-beta.13",
     "webpack-dev-middleware": "~1.5.1",
-    "webpack-hot-middleware": "~2.10.0",
-    "zombie": "~4.2.1"
+    "webpack-hot-middleware": "~2.10.0"
   },
   "nyc": {
     "exclude": [

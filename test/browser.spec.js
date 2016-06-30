@@ -1,62 +1,68 @@
 /* eslint-env mocha */
 
-import Browser from 'zombie';
+import assert from 'assert';
 import moment from 'moment';
+import Nightmare from 'nightmare';
 import server from '../dev_server.js';
-
-Browser.localhost('example.com', 3333);
+import _ from 'lodash';
 
 describe('User visits calendar page', () => {
-  const browser = new Browser();
-  browser.waitFor = 1000;
-
-  before(done => {
-    browser.visit('/', done);
-  });
+  const browser = (new Nightmare()).goto('http://localhost:3333');
 
   // Month
 
   describe('views month', () => {
     const monthLabel = moment().format('MMMM YYYY');
-    it('should see current month view', () => {
-      browser.assert.text('header h2', monthLabel);
-      browser.assert.element('.fc-month-view');
+    it('should default to month view', () => {
+      return browser
+        .visible('.fc-month-view')
+        .then(visible => assert(visible, 'month view is not visible'));
+    });
+
+    it('should show the current month', () => {
+      return browser
+        .evaluate(() => document.querySelector('header h2').innerText)
+        .then(text => assert.equal(text, monthLabel));
     });
 
     it('should see the correct events', () => {
-      browser.assert.elements('.fc-event', 7);
-    });
-  });
-
-  describe('clicks forward', () => {
-    const monthLabel = moment().add(1, 'months').format('MMMM YYYY');
-    before(done => {
-      browser.pressButton('.fwd', done);
+      return browser
+        .evaluate(() => document.querySelectorAll('.fc-event'))
+        .then(events => assert.equal(_.size(events), 7));
     });
 
-    it('should see the next month', () => {
-      browser.assert.text('header h2', monthLabel);
-      browser.assert.element('.fc-month-view');
+    describe('clicks forward', () => {
+      const monthLabel = moment().add(1, 'months').format('MMMM YYYY');
+
+      it('should see the next month', () => {
+        return browser
+          .click('.fwd')
+          .evaluate(() => document.querySelector('header h2').innerText)
+          .then(text => assert.equal(text, monthLabel));
+      });
+
+      it('should see the correct events', () => {
+        return browser
+          .evaluate(() => document.querySelectorAll('.fc-event'))
+          .then(events => assert.equal(_.size(events), 6));
+      });
     });
 
-    it('should see the correct events', () => {
-      browser.assert.elements('.fc-event', 6);
-    });
-  });
+    describe('clicks back', () => {
+      const monthLabel = moment().format('MMMM YYYY');
 
-  describe('clicks back', () => {
-    const monthLabel = moment().format('MMMM YYYY');
-    before(done => {
-      browser.pressButton('.back', done);
-    });
+      it('should see the previous month', () => {
+        return browser
+          .click('.back')
+          .evaluate(() => document.querySelector('header h2').innerText)
+          .then(text => assert.equal(text, monthLabel));
+      });
 
-    it('should see the previous month', () => {
-      browser.assert.text('header h2', monthLabel);
-      browser.assert.element('.fc-month-view');
-    });
-
-    it('should see the correct events', () => {
-      browser.assert.elements('.fc-event', 7);
+      it('should see the correct events', () => {
+        return browser
+          .evaluate(() => document.querySelectorAll('.fc-event'))
+          .then(events => assert.equal(_.size(events), 7));
+      });
     });
   });
 
@@ -64,99 +70,82 @@ describe('User visits calendar page', () => {
 
   describe('switches to week view', () => {
     const dateLabel = moment().format('MMMM YYYY');
-    before(done => {
-      browser.pressButton('.week', done);
+
+    it('should switch to week view', () => {
+      return browser
+        .click('.week')
+        .visible('.fc-week-view')
+        .then(visible => assert(visible, 'week view is not visible'));
     });
 
     it('should see the current week', () => {
-      browser.assert.text('header h2', dateLabel);
-      browser.assert.element('.fc-week-view');
-    });
-// TODO correct:
-//    it('should see the correct events', () => {
-//      browser.assert.elements('.fc-event', 2);
-//    });
-  });
-
-  describe('clicks back', () => {
-    const dateLabel = moment().add(-1, 'weeks').format('MMMM YYYY');
-    before(done => {
-      browser.pressButton('.back', done);
+      return browser
+        .click('.week')
+        .evaluate(() => document.querySelector('header h2').innerText)
+        .then(text => assert.equal(text, dateLabel));
     });
 
-    it('should see the previous week', () => {
-      browser.assert.text('header h2', dateLabel);
-      browser.assert.element('.fc-week-view');
-    });
-// TODO correct:
-//    it('should see the correct events', () => {
-//      browser.assert.elements('.fc-event', 2);
-//    });
-  });
+    describe('clicks back', () => {
+      const dateLabel = moment().add(-1, 'weeks').format('MMMM YYYY');
 
-  describe('clicks Today', () => {
-    const dateLabel = moment().format('MMMM YYYY');
-    before(done => {
-      browser.pressButton('.today', done);
+      it('should see the previous week', () => {
+        return browser
+          .click('.back')
+          .evaluate(() => document.querySelector('header h2').innerText)
+          .then(text => assert.equal(text, dateLabel));
+      });
     });
 
-    it('should see the current month', () => {
-      browser.assert.text('header h2', dateLabel);
+    describe('clicks Today', () => {
+      const dateLabel = moment().format('MMMM YYYY');
+
+      it('should see the current month', () => {
+        return browser
+          .click('.today')
+          .evaluate(() => document.querySelector('header h2').innerText)
+          .then(text => assert.equal(text, dateLabel));
+      });
     });
-// TODO correct:
-//    it('should see the correct events', () => {
-//      browser.assert.elements('.fc-event', 2);
-//    });
   });
 
   // Day
 
   describe('switches to day view', () => {
     const dateLabel = moment().format('MMMM D, YYYY');
-    before(done => {
-      browser.pressButton('.day', done);
+
+    it('should switch to day view', () => {
+      return browser
+        .click('.day')
+        .visible('.fc-day-view')
+        .then(visible => assert(visible, 'day view is not visible'));
     });
 
     it('should see the current day', () => {
-      browser.assert.text('header h2', dateLabel);
-      browser.assert.element('.fc-day-view');
-    });
-// TODO correct:
-//    it('should see the correct events', () => {
-//      browser.assert.elements('.fc-event', 1);
-//      browser.assert.text('.fc-event', 'Ricky Ricardo');
-//    });
-  });
-
-  describe('clicks forward', () => {
-    const dateLabel = moment().add(1, 'days').format('MMMM D, YYYY');
-    before(done => {
-      browser.pressButton('.fwd', done);
+      return browser
+        .evaluate(() => document.querySelector('header h2').innerText)
+        .then(text => assert.equal(text, dateLabel));
     });
 
-    it('should see the next day', () => {
-      browser.assert.text('header h2', dateLabel);
-      browser.assert.element('.fc-day-view');
-    });
-// TODO correct:
-//    it('should see the correct events', () => {
-//      browser.assert.elements('.fc-event', 0);
-//    });
-  });
+    describe('clicks forward', () => {
+      const dateLabel = moment().add(1, 'days').format('MMMM D, YYYY');
 
-  describe('clicks Today', () => {
-    const dateLabel = moment().format('MMMM D, YYYY');
-    before(done => {
-      browser.pressButton('.today', done);
+      it('should see the next day', () => {
+        return browser
+          .click('.fwd')
+          .evaluate(() => document.querySelector('header h2').innerText)
+          .then(text => assert.equal(text, dateLabel));
+      });
     });
 
-    it('should see the current month', () => {
-      browser.assert.text('header h2', dateLabel);
+    describe('clicks Today', () => {
+      const dateLabel = moment().format('MMMM D, YYYY');
+
+      it('should see the current day', () => {
+        return browser
+          .click('.today')
+          .evaluate(() => document.querySelector('header h2').innerText)
+          .then(text => assert.equal(text, dateLabel));
+      });
     });
-// TODO correct:
-//    it('should see the correct events', () => {
-//      browser.assert.elements('.fc-event', 1);
-//      browser.assert.text('.fc-event', 'Ricky Ricardo');
-//    });
   });
 });
