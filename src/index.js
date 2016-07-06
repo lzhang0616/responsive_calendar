@@ -25,15 +25,15 @@ const store = createStore(
 );
 
 export default class ResponsiveCalendar extends Component {
-  componentWillMount() {
+  componentWillMount = () => {
     this.setupConfigs();
   }
 
-  componentDidUpdate() {
+  componentDidUpdate = () => {
     this.setupConfigs();
   }
 
-  setupConfigs() {
+  setupConfigs = () => {
     const { dateAndViewUpdated, ...others } = this.props;
 
     customizeState(others, store);
@@ -42,10 +42,19 @@ export default class ResponsiveCalendar extends Component {
     subscriber.subscribe({ dateAndViewUpdated });
   }
 
+  onClickEvent = (event, element) => {
+    const { getState } = store;
+    const { view } = flattenState(getState());
+
+    const { onEventUpdated } = this.props;
+
+    if (onEventUpdated) onEventUpdated(event, element, view);
+  }
+
   render() {
     return (
       <Provider store={store}>
-        <CalendarContainer store={store} />
+        <CalendarContainer onClickEvent={this.onClickEvent} />
       </Provider>
     );
   }
@@ -112,7 +121,7 @@ class updateSubscriber {
     this.prevView = '';
   }
 
-  subscribe({ dateAndViewUpdated }) {
+  subscribe = ({ dateAndViewUpdated }) => {
     const { getState, subscribe } = this.store;
 
     subscribe(() => {

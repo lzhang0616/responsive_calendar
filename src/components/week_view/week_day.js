@@ -4,14 +4,14 @@ import { datetime } from '../../utilities/calendar_helpers';
 
 export default class WeekDay extends Component {
   renderEvents() {
-    const { events } = this.props;
+    const { events, onClickEvent } = this.props;
 
     return events.map((event, index) => {
-      const { type, title, onClick } = event;
+      const { type, title } = event;
 
       if (!type || !title) return null;
 
-      return <Event key={index} type={type} title={title} onClick={onClick}/>;
+      return <Event key={index} type={type} title={title} onClick={e => onClickEvent(event, e.currentTarget)}/>;
     });
   }
 

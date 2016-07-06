@@ -4,12 +4,13 @@ import WeekHeader from './week_header';
 
 export default class WeekView extends Component {
   renderDays() {
-    const { days } = this.props;
+    const { days, onClickEvent } = this.props;
 
     return days.map((day, index) => {
       const { events, tense, date, selected } = day;
       return (
-        <WeekDay key={index} events={events} tense={tense} date={date} selected={selected} />
+          <WeekDay key={index} events={events} tense={tense}
+            date={date} selected={selected} onClickEvent={onClickEvent} />
       );
     });
   }
