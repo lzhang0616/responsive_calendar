@@ -6,7 +6,7 @@
   font-size: 75%;
   font-weight: inherit;
   margin-bottom: 1px;
-  padding: 4px 6px;
+  padding: 2px 3px;
   text-align: left;
   i {
     opacity: 0.5;
@@ -14,14 +14,41 @@
   }
 }
 
-.fc-event-birthday {
-  background-color: rgb(208, 226, 239);
+.fc-event--move_in {
+  border-radius: 0 !important;
+  background-color: #b9d1b9 !important;
+  border-color: #b9d1b9 !important;
+  color: #303030 !important;
 }
 
-.fc-event-personal {
-  background-color: rgb(253, 219, 181);
+.fc-event--move_in:hover {
+  color: white !important;
+  background-color: #50b74e !important;
+  border-color: #50b74e !important;
 }
 
-.fc-event-work {
-  background-color: rgb(186, 209, 186);
+.fc-event--move_out {
+  border-radius: 0 !important;
+  background-color: #f0a59f !important;
+  border-color: #f0a59f !important;
+  color: #303030 !important;
+}
+
+.fc-event--move_out:hover {
+  color: white !important;
+  background-color: #c04e44 !important;
+  border-color: #c04e44 !important;
+}
+
+.fc-event--lease_end {
+  border-radius: 0 !important;
+  background-color: #fedbb3 !important;
+  border-color: #fedbb3 !important;
+  color: #303030 !important;
+}
+
+.fc-event--lease_end:hover {
+  color: white !important;
+  background-color: #f09b58 !important;
+  border-color: #f09b58 !important;
 }

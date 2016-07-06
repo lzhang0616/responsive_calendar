@@ -18,6 +18,10 @@ $border_color: #ddd;
       overflow-y: auto;
     }
   }
+
+  .btn {
+    width: inherit;
+  }
 }
 
 .fc-calendar {

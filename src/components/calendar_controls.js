@@ -9,13 +9,13 @@ export default class CalendarControls extends Component {
     return (
       <div className={className}>
         <button className='btn btn-default back' onClick={() => onBack(view)}>
-          <i className="fa fa-angle-left"></i>
+          <i className="icon icon-angle-left"></i>
         </button>
         <button className='btn btn-default today' onClick={() => onToday(view)}>
           Today
         </button>
         <button className='btn btn-default fwd' onClick={() => onForward(view)}>
-          <i className="fa fa-angle-right"></i>
+          <i className="icon icon-angle-right"></i>
         </button>
       </div>
     );
