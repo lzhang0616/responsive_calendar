@@ -19,7 +19,12 @@
       defaultView: 'month',
       dateFormatter: 'YYYY-MM-DD',
       eventSources: ['/calendar/events'],
-      dateAndViewUpdated: (date, view) => page(`/${date}/${view}`)
+      dateAndViewUpdated: (date, view) => page(`/${date}/${view}`),
+      /* onEventUpdated: (event, element, view) => {*/
+      /* console.log('event', event);*/
+      /* console.log('element', element);*/
+      /* console.log('view', view);*/
+      /* }*/
     });
 
     page.base('/#');

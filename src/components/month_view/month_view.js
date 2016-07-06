@@ -4,9 +4,9 @@ import Week from './week';
 
 export default class MonthView extends Component {
   renderWeeks() {
-    const { weeks } = this.props;
+    const { weeks, onClickEvent } = this.props;
 
-    return weeks.map((week, index) => <Week key={index} days={week} />);
+    return weeks.map((week, index) => <Week key={index} days={week} onClickEvent={onClickEvent} />);
   }
 
   render() {

@@ -3,13 +3,13 @@ import Day from './day';
 
 export default class Week extends Component {
   renderDays() {
-    const { days } = this.props;
+    const { days, onClickEvent} = this.props;
 
     return days.map((day, index) => {
       const { events, tense, date, selected, first } = day;
       return (
         <Day key={index} events={events} tense={tense} date={date}
-          selected={selected} first={first} />
+          selected={selected} first={first} onClickEvent={onClickEvent} />
       );
     });
   }

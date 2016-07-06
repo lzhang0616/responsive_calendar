@@ -29,19 +29,19 @@ export default class Calendar extends Component {
   }
 
   renderView() {
-    const { view, weeks, days, date, events } = this.props;
+    const { view, weeks, days, date, events, onClickEvent } = this.props;
 
     let showingView;
 
     switch (view) {
       case 'month':
-        showingView = <MonthView weeks={weeks} />;
+        showingView = <MonthView weeks={weeks} onClickEvent={onClickEvent} />;
         break;
       case 'week':
-        showingView = <WeekView days={days} />;
+        showingView = <WeekView days={days} onClickEvent={onClickEvent} />;
         break;
       case 'day':
-        showingView = <DayView date={date} events={events} />;
+        showingView = <DayView date={date} events={events} onClickEvent={onClickEvent} />;
         break;
       default:
         break;
