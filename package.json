@@ -4,9 +4,9 @@
   "description": "A responsive and mobile-first calendar framework based on React and Redux",
   "main": "main.js",
   "scripts": {
-    "lint": "node node_modules/eslint/bin/eslint.js src; exit 0",
+    "lint": "eslint src; exit 0",
     "start": "node dev_server.js",
-    "test": "node node_modules/nyc/bin/nyc.js --reporter text --reporter lcov node_modules/mocha/bin/mocha --recursive --timeout 10000 --compilers js:babel-register"
+    "test": "nyc --reporter text --reporter lcov mocha --recursive --timeout 10000 --compilers js:babel-register"
   },
   "repository": {
     "type": "git",
