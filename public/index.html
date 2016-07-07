@@ -7,12 +7,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tether-drop/1.4.2/css/drop-theme-arrows-bounce.min.css">
     <script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
   </head>
   <body>
     <div id="main" class="container"></div>
   </body>
   <script src="/bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.2/js/tether.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether-drop/1.4.2/js/drop.min.js"></script>
   <script>
     responsiveCalendar.calendar({
       renderDivId: 'main',
@@ -20,11 +23,18 @@
       dateFormatter: 'YYYY-MM-DD',
       eventSources: ['/calendar/events'],
       dateAndViewUpdated: (date, view) => page(`/${date}/${view}`),
-      /* onEventUpdated: (event, element, view) => {*/
-      /* console.log('event', event);*/
-      /* console.log('element', element);*/
-      /* console.log('view', view);*/
-      /* }*/
+      onEventUpdated: (event, element, view) => {
+        var popover = new Drop({
+          target: element,
+          content: `<h4>${event.title}</h4>
+                    <a href="${event.url}">
+                      ${event.url}
+                    </a>`,
+          classes: 'drop-theme-arrows-bounce',
+          position: 'bottom left',
+        });
+        popover.open();
+      }
     });
 
     page.base('/#');
