@@ -15,11 +15,12 @@ export const eventsManagerInit = {
     startQueryParam: 'start',
     endQueryParam: 'end',
     dateFormatter: 'YYYY-MM-DD',
-    eventDataTransform: events => events,
     eventDateFormatter: 'YYYY-MM-DD',
     eventGroupByKey: 'date',
     cachedStart: getCachedStart(date),
-    cachedEnd: getCachedEnd(date)
+    cachedEnd: getCachedEnd(date),
+    eventDataTransform: events => events,
+    dedupEvents: event => event.id
   }
 };
 

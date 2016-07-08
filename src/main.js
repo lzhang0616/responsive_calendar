@@ -1,17 +1,26 @@
 import React from 'react';
-import ResponsiveCalendar, { dispatchActions } from './index';
-import { render } from 'react-dom';
+import ResponsiveCalendar, { dispatchActions, addSources, removeSources } from './index';
+import { render, unmountComponentAtNode } from 'react-dom';
 
-const defaultOptions = { renderDivId: 'root' };
+let defaultOptions = { renderDivId: 'root' };
+let rendered = false;
 
 export const calendar = (options = {}) => {
-  const mergedOptions = { ...defaultOptions, ...options };
-  const { renderDivId, ...others } = mergedOptions;
+  if (rendered) unmountComponentAtNode(document.getElementById(defaultOptions.renderDivId));
+
+  defaultOptions = { ...defaultOptions, ...options };
+  const { renderDivId, ...others } = defaultOptions;
 
   render(
     <ResponsiveCalendar { ...others } />,
     document.getElementById(renderDivId)
   );
+
+  rendered = true;
 };
 
 export const updateViewAndDate = dispatchActions;
+
+export const addEventSource = addSources;
+
+export const removeEventSource = removeSources;

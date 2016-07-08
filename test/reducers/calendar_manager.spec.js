@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 
 import assert from 'assert';
-import calendarManager from '../../src/reducers/calendar_manager.js';
+import calendarManager from '../../src/reducers/calendar_manager';
 import moment from 'moment';
 import { BACK_IN_DATE, BACK_TO_TODAY, FORWARD_IN_DATE,
          SHOW_DAY_VIEW, SHOW_WEEK_VIEW,
