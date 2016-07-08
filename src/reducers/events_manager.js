@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { eventsManagerInit } from '../store/default_initial_state';
 import { INIT_EVENTS, UPDATE_EVENTS, UPDATE_EVENT_SOURCES,
-         UPDATE_EVENTS_META } from '../actions/actions_types';
+         UPDATE_EVENTS_META, ADD_EVENT_SOURCES, REMOVE_EVENT_SOURCES } from '../actions/actions_types';
 
 const updateMeta = (state, metaShouldUpdate) => {
   const { eventsMetaData, ...others } = state;
@@ -11,7 +11,7 @@ const updateMeta = (state, metaShouldUpdate) => {
 
 const concatEvents = (state, events) => {
   // Combine new events with original, remove duplicates:
-  const newEvents = _.uniqBy(state.events.concat(events), event => event.id);
+  const newEvents = _.uniqBy(state.events.concat(events), state.eventsMetaData.dedupEvents);
   return { ...state, events: newEvents };
 };
 
@@ -35,7 +35,24 @@ const eventsManager = (state = eventsManagerInit,
                                               cachedEnd: newEnd });
       break;
     case UPDATE_EVENT_SOURCES:
-      newState = { ...state, eventSources };
+      if (_.isArray(eventSources)) newState = { ...state, eventSources };
+      break;
+    case ADD_EVENT_SOURCES:
+      let newSources;
+      if (_.isArray(eventSources)) {
+        newSources = _.union(state.eventSources, eventSources);
+      } else if (_.isString(eventSources)) {
+        newSources = _.union(state.eventSources, [ eventSources ]);
+      }
+      newState = { ...state, eventSources: newSources };
+      break;
+    case REMOVE_EVENT_SOURCES:
+      if (_.isArray(eventSources)) {
+        newSources = _.difference(state.eventSources, eventSources);
+      } else if (_.isString(eventSources)) {
+        newSources = _.difference(state.eventSources, [ eventSources ]);
+      }
+      newState = { ...state, eventSources: newSources };
       break;
     case UPDATE_EVENTS_META:
       newState = updateMeta(state, metaShouldUpdate);

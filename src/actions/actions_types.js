@@ -9,4 +9,6 @@ export const UPDATE_VIEW = 'update_view';
 export const UPDATE_DATE = 'update_date';
 export const UPDATE_EVENTS = 'update_events';
 export const UPDATE_EVENT_SOURCES = 'update_event_sources';
+export const ADD_EVENT_SOURCES = 'add_event_source';
+export const REMOVE_EVENT_SOURCES = 'remove_event_sources';
 export const UPDATE_EVENTS_META = 'update_events_meta';

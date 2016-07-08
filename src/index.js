@@ -9,7 +9,8 @@ import defaultInitialState from './store/default_initial_state';
 import { today, flattenState } from './utilities/calendar_helpers';
 import { updateView } from './actions/view_controls_actions';
 import { updateDate } from './actions/calendar_controls_actions';
-import { updateEventSources, updateEventsMeta } from './actions/events_actions';
+import { updateEventSources, updateEventsMeta,
+         addEventSources, removeEventSources } from './actions/events_actions';
 import { createStore, applyMiddleware } from 'redux';
 import { fetchEventSources } from './actions/events_actions';
 import { Provider } from 'react-redux';
@@ -78,10 +79,21 @@ export const dispatchActions = (view, date) => {
   if (dateChanged || viewChanged) dispatch(fetchEventSources());
 };
 
+export const addSources = sources => {
+  const { dispatch } = store;
+  dispatch(addEventSources(sources));
+  dispatch(fetchEventSources());
+};
+
+export const removeSources = sources => {
+  const { dispatch } = store;
+  dispatch(removeEventSources(sources));
+};
+
 const customizeState = (options, store) => {
   const { renderDivId, dateFormatter, eventDateFormatter,
           startQueryParam, endQueryParam, defaultView, eventSources,
-          eventGroupByKey, eventDataTransform } = options;
+          eventGroupByKey, eventDataTransform, dedupEvents } = options;
   const { dispatch } = store;
   const eventsMetaData = {};
 
@@ -103,11 +115,13 @@ const customizeState = (options, store) => {
   if (endQueryParam) eventsMetaData.endQueryParam = endQueryParam;
   if (eventGroupByKey) eventsMetaData.eventGroupByKey = eventGroupByKey;
 
-  if (eventDataTransform) {
-    if (!_.isFunction(eventDataTransform)) throw `eventDataTransform must be a function`;
+  [ eventDataTransform, dedupEvents ].forEach(func => {
+    if (func) {
+      if (!_.isFunction(func)) throw `Expect a function, but get ${func}`;
 
-    eventsMetaData.eventDataTransform = eventDataTransform;
-  }
+      eventsMetaData[func.name] = func;
+    }
+  });
 
   dispatch(updateEventsMeta(eventsMetaData));
 

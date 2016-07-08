@@ -1,8 +1,11 @@
 import fetch from 'isomorphic-fetch';
+import _ from 'lodash';
 import { INIT_EVENTS, UPDATE_EVENTS, UPDATE_EVENT_SOURCES,
-         UPDATE_EVENTS_META } from './actions_types';
+         UPDATE_EVENTS_META, ADD_EVENT_SOURCES, REMOVE_EVENT_SOURCES } from './actions_types';
 import { getRange, flattenState, getCachedStart,
          getCachedEnd, windowSize, windowSizeUnit } from '../utilities/calendar_helpers';
+
+let prevEventSources;
 
 const fetchInit = {
   method: 'GET',
@@ -10,6 +13,20 @@ const fetchInit = {
     'Content-Type': 'application/json; charset=utf-8'
   },
   credentials: 'same-origin'
+};
+
+export const addEventSources = eventSources => {
+  return {
+    type: ADD_EVENT_SOURCES,
+    eventSources
+  };
+};
+
+export const removeEventSources = eventSources => {
+  return {
+    type: REMOVE_EVENT_SOURCES,
+    eventSources
+  };
 };
 
 export const updateEventSources = eventSources => {
@@ -117,8 +134,11 @@ export const fetchEventSources = (init = false, index = 0) => {
   return (dispatch, getState) => {
     const { eventSources, cachedStart, cachedEnd, date, view } = flattenState(getState());
     const [ start, end ] = getRange(date, view);
+    let fetchNeededSources;
 
-    if (shouldInit(start, end, cachedStart, cachedEnd, date)) {
+    if (!prevEventSources || init) prevEventSources = [];
+
+    if (!init && shouldInit(start, end, cachedStart, cachedEnd, date)) {
       dispatch(updateEventsMeta({
         cachedStart: getCachedStart(date),
         cachedEnd: getCachedEnd(date)
@@ -127,8 +147,20 @@ export const fetchEventSources = (init = false, index = 0) => {
       return dispatch(fetchEventSources(true));
     }
 
-    const [ newStart, newEnd ] = getNewRange(start, end, cachedStart, cachedEnd, init);
-    let len = eventSources.length;
+    let [ newStart, newEnd ] = getNewRange(start, end, cachedStart, cachedEnd, init);
+
+    if (!newStart) {
+      fetchNeededSources = _.difference(eventSources, prevEventSources);
+    } else {
+      fetchNeededSources = eventSources;
+    }
+
+    const len = fetchNeededSources.length;
+
+    if (len > 0 && !newStart) {
+      newStart = cachedStart.clone();
+      newEnd = cachedEnd.clone();
+    }
 
     const payload = {
       firstFetch: index === 0,
@@ -138,10 +170,12 @@ export const fetchEventSources = (init = false, index = 0) => {
     };
 
     if (index < len && newStart) {
-      dispatch(fetchEvent(eventSources[index], init, payload));
+      dispatch(fetchEvent(fetchNeededSources[index], init, payload));
 
       return dispatch(fetchEventSources(init, index + 1));
     } else {
+      if (len > 0) prevEventSources = eventSources;
+
       return Promise.resolve();
     }
   };
