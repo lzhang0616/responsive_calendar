@@ -91,12 +91,12 @@ export const removeSources = sources => {
   dispatch(removeEventSources(sources));
 };
 
-export const addEventTypes = eventTypes => {
+export const addHiddenEventTypes = eventTypes => {
   const { dispatch } = store;
   dispatch(addDisabledEventTypes(eventTypes));
 };
 
-export const removeEventTypes = eventTypes => {
+export const removeHiddenEventTypes = eventTypes => {
   const { dispatch } = store;
   dispatch(removeDisabledEventTypes(eventTypes));
 };

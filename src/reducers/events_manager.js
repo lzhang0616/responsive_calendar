@@ -11,27 +11,29 @@ const updateMeta = (state, metaShouldUpdate) => {
   return { ...others, eventsMetaData: updatedMeta };
 };
 
-const concatEvents = (state, events) => {
+const concatEvents = (state, events, source) => {
   // Combine new events with original, remove duplicates:
   const newEvents = _.uniqBy(state.events.concat(events), state.eventsMetaData.dedupEvents);
+  // Name the attribute specific intentionally to avoid potential naming conflict
+  if (source) newEvents.forEach(event => event._responsiveCalendarSource = source);
   return { ...state, events: newEvents };
 };
 
 const eventsManager = (state = eventsManagerInit,
                        { type, events, eventSources, firstFetch,
-                         lastFetch, newStart, newEnd, metaShouldUpdate, eventTypes }) => {
+                         lastFetch, newStart, newEnd, metaShouldUpdate, eventTypes, source }) => {
   let newState = state;
 
   switch (type) {
     case INIT_EVENTS:
       if (firstFetch) newState = { ...state, events: [] };
-      newState = concatEvents(newState, events);
+      newState = concatEvents(newState, events, source);
       if (lastFetch) newState = updateMeta(newState,
                                            { cachedStart: newStart,
                                              cachedEnd: newEnd });
       break;
     case UPDATE_EVENTS:
-      newState = concatEvents(state, events);
+      newState = concatEvents(state, events, source);
       if (lastFetch) newState = updateMeta(newState,
                                             { cachedStart: newStart,
                                               cachedEnd: newEnd });
