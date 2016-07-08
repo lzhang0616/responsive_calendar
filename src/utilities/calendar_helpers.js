@@ -95,14 +95,16 @@ const getTense = (date, today) => {
   return tense;
 };
 
-export const getDays = ({ date, view, events, selected, eventDateFormatter, eventGroupByKey }) => {
+export const getDays = ({ date, view, events, selected, eventDateFormatter,
+                          eventGroupByKey, disabledEventTypes }) => {
   let current;
   let day;
   const startDate = getStartDate(date, view).clone();
   const endDate = getEndDate(date, view);
   const today = moment().startOf('day');
 
-  const eventsByDay = _.groupBy(events, eventGroupByKey);
+  const eventsByDay = _.groupBy(_.filter(events, event => _.indexOf(disabledEventTypes, event.type) < 0),
+                                eventGroupByKey);
 
   const days = [];
 

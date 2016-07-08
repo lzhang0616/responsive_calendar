@@ -4,13 +4,17 @@ import assert from 'assert';
 import moment from 'moment';
 import eventsManager from '../../src/reducers/events_manager';
 import { INIT_EVENTS, UPDATE_EVENTS, UPDATE_EVENT_SOURCES,
-         ADD_EVENT_SOURCES, REMOVE_EVENT_SOURCES, UPDATE_EVENTS_META } from '../../src/actions/actions_types';
+         ADD_EVENT_SOURCES, REMOVE_EVENT_SOURCES, UPDATE_EVENTS_META,
+         UPDATE_DISABLED_EVENT_TYPES, ADD_DISABLED_EVENT_TYPES,
+         REMOVE_DISABLED_EVENT_TYPES } from '../../src/actions/actions_types';
 
 describe('events manager reducer', () => {
   let state = eventsManager(undefined, {});
 
   it('should return the correct default state', () => {
     assert.deepEqual(state.events, []);
+    assert.deepEqual(state.eventSources, []);
+    assert.deepEqual(state.disabledEventTypes, []);
   });
 
   describe('event sources', () => {
@@ -140,6 +144,65 @@ describe('events manager reducer', () => {
                                    });
 
       assert.deepEqual(state.eventsMetaData.dateFormatter, newDateFormatter);
+    });
+  });
+  describe('disabled event types', () => {
+    describe('update', () => {
+      it('should update', () => {
+        state = eventsManager(state, { type: UPDATE_DISABLED_EVENT_TYPES,
+                                         eventTypes: [ 'event_type_1', 'event_type_2' ] });
+        assert.deepEqual(state.disabledEventTypes, [ 'event_type_1', 'event_type_2' ]);
+      });
+      it('should ignore', () => {
+        state = eventsManager(state, { type: UPDATE_DISABLED_EVENT_TYPES,
+                                         eventTypes: 'event_type_1' });
+        assert.deepEqual(state.disabledEventTypes, [ 'event_type_1', 'event_type_2' ]);
+      });
+    });
+
+    describe('add', () => {
+      it('should add array of event types', () => {
+        state = eventsManager(state, { type: ADD_DISABLED_EVENT_TYPES,
+                                       eventTypes: [ 'event_type_3', 'event_type_4' ] });
+        assert.deepEqual(state.disabledEventTypes,
+                         [ 'event_type_1', 'event_type_2', 'event_type_3', 'event_type_4']);
+      });
+      it('should add event type string', () => {
+        state = eventsManager(state, { type: ADD_DISABLED_EVENT_TYPES,
+                                       eventTypes: 'event_type_5' });
+        assert.deepEqual(state.disabledEventTypes,
+                         [ 'event_type_1', 'event_type_2', 'event_type_3',
+                           'event_type_4', 'event_type_5']);
+      });
+      it('should remove duplicates from array of event types', () => {
+        state = eventsManager(state, { type: ADD_DISABLED_EVENT_TYPES,
+                                       eventTypes: [ 'event_type_3', 'event_type_4' ] });
+        assert.deepEqual(state.disabledEventTypes,
+                         [ 'event_type_1', 'event_type_2', 'event_type_3',
+                           'event_type_4', 'event_type_5']);
+      });
+      it('should remove duplicates from event type string', () => {
+        state = eventsManager(state, { type: ADD_DISABLED_EVENT_TYPES,
+                                       eventTypes: 'event_type_1' });
+        assert.deepEqual(state.disabledEventTypes,
+                         [ 'event_type_1', 'event_type_2', 'event_type_3',
+                           'event_type_4', 'event_type_5']);
+      });
+    });
+    describe('remove', () => {
+      it('should remove array of event types', () => {
+        state = eventsManager(state, { type: REMOVE_DISABLED_EVENT_TYPES,
+                                       eventTypes: [ 'event_type_3', 'event_type_4',
+                                                       'event_type_6'] });
+        assert.deepEqual(state.disabledEventTypes,
+                         [ 'event_type_1', 'event_type_2', 'event_type_5' ]);
+      });
+      it('should remove event type string', () => {
+        state = eventsManager(state, { type: REMOVE_DISABLED_EVENT_TYPES,
+                                       eventTypes: 'event_type_5' });
+        assert.deepEqual(state.disabledEventTypes,
+                         [ 'event_type_1', 'event_type_2' ]);
+      });
     });
   });
 });

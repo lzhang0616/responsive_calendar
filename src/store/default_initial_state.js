@@ -11,6 +11,7 @@ export const calendarManagerInit = {
 export const eventsManagerInit = {
   events: [],
   eventSources: [],
+  disabledEventTypes: [],
   eventsMetaData: {
     startQueryParam: 'start',
     endQueryParam: 'end',
@@ -19,7 +20,7 @@ export const eventsManagerInit = {
     eventGroupByKey: 'date',
     cachedStart: getCachedStart(date),
     cachedEnd: getCachedEnd(date),
-    eventDataTransform: events => events,
+    eventDataTransform: (events, source) => events,
     dedupEvents: event => event.id
   }
 };

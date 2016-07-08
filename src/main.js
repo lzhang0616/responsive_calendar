@@ -1,5 +1,6 @@
 import React from 'react';
-import ResponsiveCalendar, { dispatchActions, addSources, removeSources } from './index';
+import ResponsiveCalendar, { dispatchActions, addSources,
+                             removeSources, addEventTypes, removeEventTypes } from './index';
 import { render, unmountComponentAtNode } from 'react-dom';
 
 let defaultOptions = { renderDivId: 'root' };
@@ -24,3 +25,7 @@ export const updateViewAndDate = dispatchActions;
 export const addEventSource = addSources;
 
 export const removeEventSource = removeSources;
+
+export const addDisabledEventTypes = addEventTypes;
+
+export const removeDisabledEventTypes = removeEventTypes;
