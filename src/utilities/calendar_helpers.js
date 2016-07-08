@@ -96,15 +96,21 @@ const getTense = (date, today) => {
 };
 
 export const getDays = ({ date, view, events, selected, eventDateFormatter,
-                          eventGroupByKey, disabledEventTypes }) => {
+                          eventGroupByKey, disabledEventTypes, eventSources }) => {
   let current;
   let day;
   const startDate = getStartDate(date, view).clone();
   const endDate = getEndDate(date, view);
   const today = moment().startOf('day');
 
-  const eventsByDay = _.groupBy(_.filter(events, event => _.indexOf(disabledEventTypes, event.type) < 0),
-                                eventGroupByKey);
+  const eventShouldVisible = event => {
+    const { type, _responsiveCalendarSource } = event;
+
+    return _.indexOf(disabledEventTypes, type) < 0 &&
+      ( !_responsiveCalendarSource || _.indexOf(eventSources, _responsiveCalendarSource) > -1 );
+  };
+
+  const eventsByDay = _.groupBy(_.filter(events, event => eventShouldVisible(event)), eventGroupByKey);
 
   const days = [];
 

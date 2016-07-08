@@ -78,6 +78,14 @@ describe('events manager reducer', () => {
   });
 
   describe('events', () => {
+    it('adds responsiveCalendarSource if the event is from a event source', () => {
+      const date = moment().add(10, 'year');
+      state = eventsManager(state, { type: INIT_EVENTS, events: [ { id: 0, title: 'event0' } ],
+                                     source: '/calendar/events', firstFetch: true,
+                                     newStart: date.clone(), newEnd: date.clone() });
+      assert.deepEqual(state.events,
+                       [ { id: 0, title: 'event0', _responsiveCalendarSource: '/calendar/events' } ]);
+    });
     describe('init', () => {
       it('starts first fetch', () => {
         const date = moment().add(10, 'year');

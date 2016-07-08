@@ -1,6 +1,6 @@
 import React from 'react';
 import ResponsiveCalendar, { dispatchActions, addSources,
-                             removeSources, addEventTypes, removeEventTypes } from './index';
+                             removeSources, addHiddenEventTypes, removeHiddenEventTypes } from './index';
 import { render, unmountComponentAtNode } from 'react-dom';
 
 let defaultOptions = { renderDivId: 'root' };
@@ -26,6 +26,6 @@ export const addEventSource = addSources;
 
 export const removeEventSource = removeSources;
 
-export const addDisabledEventTypes = addEventTypes;
+export const removeVisibleEventTypes = addHiddenEventTypes;
 
-export const removeDisabledEventTypes = removeEventTypes;
+export const addVisibleEventTypes = removeHiddenEventTypes;

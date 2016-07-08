@@ -147,7 +147,7 @@ export const fetchEvent = (source, init, payload) => {
     return fetch(sourceUrl(source, getState(), newStart, newEnd, init), fetchInit)
       .then(response => response.json())
       .then(events => eventDataTransform(events, source))
-      .then(events => dispatch(updateEvents(init, { ...payload, events })))
+      .then(events => dispatch(updateEvents(init, { ...payload, events, source })))
       .catch(err => console.error(err));
   };
 };
