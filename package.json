@@ -75,7 +75,8 @@
     "style-loader": "~0.13.1",
     "webpack": "~2.1.0-beta.13",
     "webpack-dev-middleware": "~1.5.1",
-    "webpack-hot-middleware": "~2.10.0"
+    "webpack-hot-middleware": "~2.10.0",
+    "webpack-visualizer-plugin": "^0.1.5"
   },
   "nyc": {
     "exclude": [
