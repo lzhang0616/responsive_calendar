@@ -10,7 +10,8 @@ import { today, flattenState } from './utilities/calendar_helpers';
 import { updateView } from './actions/view_controls_actions';
 import { updateDate } from './actions/calendar_controls_actions';
 import { updateEventSources, updateEventsMeta,
-         addEventSources, removeEventSources } from './actions/events_actions';
+         addEventSources, removeEventSources, addDisabledEventTypes,
+         removeDisabledEventTypes, updateDisabledEventTypes } from './actions/events_actions';
 import { createStore, applyMiddleware } from 'redux';
 import { fetchEventSources } from './actions/events_actions';
 import { Provider } from 'react-redux';
@@ -90,10 +91,20 @@ export const removeSources = sources => {
   dispatch(removeEventSources(sources));
 };
 
+export const addEventTypes = eventTypes => {
+  const { dispatch } = store;
+  dispatch(addDisabledEventTypes(eventTypes));
+};
+
+export const removeEventTypes = eventTypes => {
+  const { dispatch } = store;
+  dispatch(removeDisabledEventTypes(eventTypes));
+};
+
 const customizeState = (options, store) => {
   const { renderDivId, dateFormatter, eventDateFormatter,
           startQueryParam, endQueryParam, defaultView, eventSources,
-          eventGroupByKey, eventDataTransform, dedupEvents } = options;
+          eventGroupByKey, eventDataTransform, dedupEvents, disabledEventTypes } = options;
   const { dispatch } = store;
   const eventsMetaData = {};
 
@@ -107,6 +118,12 @@ const customizeState = (options, store) => {
     if (!Array.isArray(eventSources)) throw 'EventSources must be an array of source URLs';
 
     dispatch(updateEventSources(eventSources));
+  }
+
+  if (disabledEventTypes) {
+    if (!Array.isArray(disabledEventTypes)) throw 'disabledEventTypes must be an array';
+
+    dispatch(updateDisabledEventTypes(disabledEventTypes));
   }
 
   if (dateFormatter) eventsMetaData.dateFormatter = dateFormatter;

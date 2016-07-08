@@ -12,3 +12,6 @@ export const UPDATE_EVENT_SOURCES = 'update_event_sources';
 export const ADD_EVENT_SOURCES = 'add_event_source';
 export const REMOVE_EVENT_SOURCES = 'remove_event_sources';
 export const UPDATE_EVENTS_META = 'update_events_meta';
+export const UPDATE_DISABLED_EVENT_TYPES = 'update_disabled_event_types';
+export const ADD_DISABLED_EVENT_TYPES = 'add_disabled_event_types';
+export const REMOVE_DISABLED_EVENT_TYPES = 'remove_disabled_event_types';
