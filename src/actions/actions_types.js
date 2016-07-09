@@ -15,3 +15,4 @@ export const UPDATE_EVENTS_META = 'update_events_meta';
 export const UPDATE_DISABLED_EVENT_TYPES = 'update_disabled_event_types';
 export const ADD_DISABLED_EVENT_TYPES = 'add_disabled_event_types';
 export const REMOVE_DISABLED_EVENT_TYPES = 'remove_disabled_event_types';
+export const UPDATE_CALENDAR_META = 'update_calendar_meta';

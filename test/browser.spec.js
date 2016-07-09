@@ -28,7 +28,7 @@ describe('User visits calendar page', () => {
     it('should see the correct events', () => {
       return browser
         .evaluate(() => document.querySelectorAll('.fc-event'))
-        .then(events => assert.equal(_.size(events), 7));
+        .then(events => assert.equal(_.size(events), 16));
     });
 
     describe('clicks forward', () => {
@@ -61,7 +61,7 @@ describe('User visits calendar page', () => {
       it('should see the correct events', () => {
         return browser
           .evaluate(() => document.querySelectorAll('.fc-event'))
-          .then(events => assert.equal(_.size(events), 7));
+          .then(events => assert.equal(_.size(events), 16));
       });
     });
   });

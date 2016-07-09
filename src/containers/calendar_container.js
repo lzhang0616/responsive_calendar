@@ -14,21 +14,33 @@ class CalendarContainer extends Component {
 
 const mapStateToProps = state => {
   const flatState = flattenState(state);
-  const { date, view } = flatState;
+  const { date, view, eventLimitClick } = flatState;
 
-  const props = { date, view };
+  const props = { date, view, eventLimitClick };
 
   switch (view) {
     case 'month':
+      const { monthViewEventLimit, monthViewEventLimitSize } = flatState;
+
       props.weeks = getWeeks(flatState);
+      props.eventLimit = monthViewEventLimit;
+      props.eventLimitSize = monthViewEventLimitSize;
       break;
     case 'week':
+    const { weekViewEventLimit, weekViewEventLimitSize } = flatState;
+
       props.days = getDays(flatState);
+      props.eventLimit = weekViewEventLimit;
+      props.eventLimitSize = weekViewEventLimitSize;
       break;
     case 'day':
+      const { dayViewEventLimit, dayViewEventLimitSize } = flatState;
       const day = getDays(flatState)[0];
+
       props.date = day.date;
       props.events = day.events;
+      props.eventLimit = dayViewEventLimit;
+      props.eventLimitSize = dayViewEventLimitSize;
       break;
     default:
       break;

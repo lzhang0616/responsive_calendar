@@ -56,7 +56,10 @@ export default class ResponsiveCalendar extends Component {
   render() {
     return (
       <Provider store={store}>
-        <CalendarContainer onClickEvent={this.onClickEvent} />
+        <CalendarContainer
+          onClickEvent={this.onClickEvent}
+          updateViewAndDate={dispatchActions}
+        />
       </Provider>
     );
   }
