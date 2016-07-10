@@ -62,3 +62,10 @@ export const updateEventLimitClick = target => {
     }
   };
 };
+
+export const updateCalendarMeta = calendarMeta => {
+  return {
+    type: UPDATE_CALENDAR_META,
+    calendarMeta
+  };
+};

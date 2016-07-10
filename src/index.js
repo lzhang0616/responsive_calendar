@@ -9,6 +9,7 @@ import defaultInitialState from './store/default_initial_state';
 import { today, flattenState } from './utilities/calendar_helpers';
 import { updateView } from './actions/view_controls_actions';
 import { updateDate } from './actions/calendar_controls_actions';
+import { updateCalendarMeta } from './actions/calendar_meta_data_actions';
 import { updateEventSources, updateEventsMeta,
          addEventSources, removeEventSources, addDisabledEventTypes,
          removeDisabledEventTypes, updateDisabledEventTypes } from './actions/events_actions';
@@ -105,20 +106,46 @@ export const removeHiddenEventTypes = eventTypes => {
 };
 
 const customizeState = (options, store) => {
-  const { renderDivId, dateFormatter, eventDateFormatter,
-          startQueryParam, endQueryParam, defaultView, eventSources,
-          eventGroupByKey, eventDataTransform, dedupEvents, disabledEventTypes } = options;
+  const { renderDivId, dateFormatter, eventDateFormatter, startQueryParam,
+          endQueryParam, defaultView, eventSources, eventGroupByKey,
+          eventDataTransform, dedupEvents, disabledEventTypes, eventLimitClick } = options;
+
   const { dispatch } = store;
   const eventsMetaData = {};
+  const calendarMetaData = {};
+
+  if (eventLimitClick) {
+    if ([ 'day', 'week', 'month' ].indexOf(eventLimitClick) < 0) throw `invalid eventLimitClick: ${eventLimitClick}`;
+
+    calendarMetaData.eventLimitClick = eventLimitClick;
+  }
+
+  [ 'dayViewEventLimit', 'weekViewEventLimit', 'monthViewEventLimit' ].forEach(eventLimitType => {
+    const eventLimit = options[eventLimitType];
+
+    if (!eventLimit) return;
+    if ([ 'none', 'plain', 'summary' ].indexOf(eventLimit) < 0) throw `invalid eventLimit type: ${eventLimit}`;
+
+    calendarMetaData[eventLimitType] = eventLimit;
+  });
+
+  [ 'dayViewEventLimitSize', 'weekViewEventLimitSize', 'monthViewEventLimitSize' ].forEach(eventLimitSizeType => {
+    const eventLimitSize = options[eventLimitSizeType];
+
+    if (!eventLimitSize) return;
+    if (!_.isNumber(eventLimitSize)) throw `invalid eventLimitSize type: ${eventLimitSize}`;
+
+    calendarMetaData[eventLimitSizeType] = eventLimitSize;
+  });
 
   if (defaultView) {
-    if (['day', 'week', 'month'].indexOf(defaultView) < 0) throw `view type: ${defaultView}`;
+    if ([ 'day', 'week', 'month' ].indexOf(defaultView) < 0) throw `view type: ${defaultView}`;
 
     dispatch(updateView(defaultView));
   }
 
   if (eventSources) {
-    if (!Array.isArray(eventSources)) throw 'EventSources must be an array of source URLs';
+    if (!Array.isArray(eventSources)) throw 'eventSources must be an array of source URLs';
 
     dispatch(updateEventSources(eventSources));
   }
@@ -146,6 +173,8 @@ const customizeState = (options, store) => {
   dispatch(updateEventsMeta(eventsMetaData));
 
   dispatch(fetchEventSources(true));
+
+  dispatch(updateCalendarMeta(calendarMetaData));
 };
 
 class updateSubscriber {

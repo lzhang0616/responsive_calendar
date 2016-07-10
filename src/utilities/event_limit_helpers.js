@@ -88,7 +88,7 @@ const renderEvents = (props, view) => {
 
   switch (eventLimit) {
     case 'none':
-      events = renderEventsWithoutLimit(others);
+    events = renderEventsWithoutLimit(others);
       break;
     case 'plain':
       events = renderEventsWithPlainLimit(others);
