@@ -44,7 +44,7 @@
     "redux-thunk": "~2.1.0"
   },
   "devDependencies": {
-    "assert": "^1.4.1",
+    "assert": "~1.4.1",
     "autoprefixer": "~6.3.6",
     "babel-core": "~6.9.0",
     "babel-loader": "~6.2.4",
@@ -76,7 +76,7 @@
     "webpack": "~2.1.0-beta.13",
     "webpack-dev-middleware": "~1.5.1",
     "webpack-hot-middleware": "~2.10.0",
-    "webpack-visualizer-plugin": "^0.1.5"
+    "webpack-visualizer-plugin": "~0.1.5"
   },
   "nyc": {
     "exclude": [
