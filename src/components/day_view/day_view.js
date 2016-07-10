@@ -1,20 +1,8 @@
 import React, { Component } from 'react';
-import Event from '../event';
+import renderEvents from '../../utilities/event_limit_helpers';
 import { datetime } from '../../utilities/calendar_helpers';
 
 export default class DayView extends Component {
-  renderEvents() {
-    const { events, onClickEvent } = this.props;
-
-    return events.map((event, index) => {
-      const { type, title } = event;
-
-      if (!type || !title) return null;
-
-      return <Event key={index} type={type} title={title} onClick={e => onClickEvent(event, e.currentTarget)}/>;
-    });
-  }
-
   render() {
     const { date } = this.props;
 
@@ -25,7 +13,7 @@ export default class DayView extends Component {
         </div>
         <div className="fc-body">
           <div className="fc-row">
-            {this.renderEvents()}
+            {renderEvents(this.props, 'day')}
           </div>
         </div>
       </div>

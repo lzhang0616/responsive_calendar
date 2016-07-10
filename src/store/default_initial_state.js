@@ -25,7 +25,18 @@ export const eventsManagerInit = {
   }
 };
 
+export const calendarMetaDataInit = {
+  dayViewEventLimit: 'none',
+  weekViewEventLimit: 'none',
+  monthViewEventLimit: 'none',
+  dayViewEventLimitSize: 3,
+  weekViewEventLimitSize: 3,
+  monthViewEventLimitSize: 3,
+  eventLimitClick: 'day'
+};
+
 export default {
   calendarManager: calendarManagerInit,
-  eventsManager: eventsManagerInit
+  eventsManager: eventsManagerInit,
+  calendarMetaData: calendarMetaDataInit
 };

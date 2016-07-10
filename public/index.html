@@ -22,6 +22,18 @@
       defaultView: 'month',
       dateFormatter: 'YYYY-MM-DD',
       eventSources: ['/calendar/events'],
+      // eventLimitClick default is day
+      eventLimitClick: 'week',
+      views: {
+        week: {
+          eventLimit: 'plain',
+          eventLimitSize: 3
+        },
+        month: {
+          eventLimit: 'summary',
+          eventLimitSize: 2
+        }
+      },
       dateAndViewUpdated: (date, view) => page(`/${date}/${view}`),
       onEventUpdated: (event, element, view) => {
         var popover = new Drop({

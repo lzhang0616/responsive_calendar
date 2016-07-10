@@ -29,19 +29,42 @@ export default class Calendar extends Component {
   }
 
   renderView() {
-    const { view, weeks, days, date, events, onClickEvent } = this.props;
+    const { view, weeks, days, date, events, onClickEvent, eventLimit,
+            eventLimitSize, updateViewAndDate, eventLimitClick } = this.props;
 
     let showingView;
 
     switch (view) {
       case 'month':
-        showingView = <MonthView weeks={weeks} onClickEvent={onClickEvent} />;
+        showingView = <MonthView
+                        weeks={weeks}
+                        onClickEvent={onClickEvent}
+                        eventLimit={eventLimit}
+                        eventLimitSize={eventLimitSize}
+                        updateViewAndDate={updateViewAndDate}
+                        eventLimitClick={eventLimitClick}
+                      />;
         break;
       case 'week':
-        showingView = <WeekView days={days} onClickEvent={onClickEvent} />;
+        showingView = <WeekView
+                        days={days}
+                        onClickEvent={onClickEvent}
+                        eventLimit={eventLimit}
+                        eventLimitSize={eventLimitSize}
+                        updateViewAndDate={updateViewAndDate}
+                        eventLimitClick={eventLimitClick}
+                      />;
         break;
       case 'day':
-        showingView = <DayView date={date} events={events} onClickEvent={onClickEvent} />;
+        showingView = <DayView
+                        date={date}
+                        events={events}
+                        onClickEvent={onClickEvent}
+                        eventLimit={eventLimit}
+                        eventLimitSize={eventLimitSize}
+                        updateViewAndDate={updateViewAndDate}
+                        eventLimitClick={eventLimitClick}
+                      />;
         break;
       default:
         break;

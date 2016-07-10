@@ -1,20 +1,8 @@
 import React, { Component } from 'react';
-import Event from '../event';
+import renderEvents from '../../utilities/event_limit_helpers';
 import { datetime } from '../../utilities/calendar_helpers';
 
 export default class WeekDay extends Component {
-  renderEvents() {
-    const { events, onClickEvent } = this.props;
-
-    return events.map((event, index) => {
-      const { type, title } = event;
-
-      if (!type || !title) return null;
-
-      return <Event key={index} type={type} title={title} onClick={e => onClickEvent(event, e.currentTarget)}/>;
-    });
-  }
-
   render() {
     const { tense, date, selected } = this.props;
 
@@ -25,7 +13,7 @@ export default class WeekDay extends Component {
     return (
       <div className={dayClass}>
         <span className="fc-weekday">{datetime(date, 'ddd D')}</span>
-        {this.renderEvents()}
+        {renderEvents(this.props, 'week')}
       </div>
     );
   }

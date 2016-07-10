@@ -27,10 +27,10 @@ export const getCachedEnd = date => {
 };
 
 
-export const flattenState = ({ calendarManager, eventsManager }) => {
+export const flattenState = ({ calendarManager, eventsManager, calendarMetaData }) => {
   const { eventsMetaData, ...others } = eventsManager;
 
-  return { ...calendarManager, ...others, ...eventsMetaData };
+  return { ...calendarManager, ...others, ...eventsMetaData, ...calendarMetaData };
 };
 
 export const getStartDate = (date, view) => {
