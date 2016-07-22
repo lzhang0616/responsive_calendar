@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Hammer from 'react-hammerjs';
 import CalendarControls from './calendar_controls';
 import DayView from './day_view/day_view';
 import MonthView from './month_view/month_view.js';
@@ -98,23 +99,40 @@ export default class Calendar extends Component {
       maxWidth: this.props.width,
       maxHeight: this.props.height
     };
+
+    // Don't use fat arrow function, it will lose the direction argument
+    function handleSwipe({ direction }) {
+      switch (direction) {
+        case 2:
+          onForward(view);
+          break;
+        case 4:
+          onBack(view);
+          break;
+        default:
+          break;
+      }
+    };
+
     return (
-      <div className={this.displayClass()} style={style}>
-        <header className='row'>
-          <div className='col-sm-5'>
-            {this.renderHeader()}
-          </div>
-          <div className='col-sm-7'>
-            <CalendarControls calendarControlsClass='h2' onBack={onBack}
-              onToday={onToday} onForward={onForward} view={view} />
-            <ViewControls viewControlsClass='h2 pull-right' showDayView={showDayView}
-              showWeekView={showWeekView} showMonthView={showMonthView} view={view} />
-          </div>
-        </header>
-        <section>
-          {this.renderView()}
-        </section>
-      </div>
+      <Hammer onSwipe={handleSwipe} direction={Hammer.DIRECTION_HORIZONTAL}>
+        <div className={this.displayClass()} style={style}>
+          <header className='row'>
+            <div className='col-sm-5'>
+              {this.renderHeader()}
+            </div>
+            <div className='col-sm-7'>
+              <CalendarControls calendarControlsClass='h2' onBack={onBack}
+                onToday={onToday} onForward={onForward} view={view} />
+              <ViewControls viewControlsClass='h2 pull-right' showDayView={showDayView}
+                showWeekView={showWeekView} showMonthView={showMonthView} view={view} />
+            </div>
+          </header>
+          <section>
+            {this.renderView()}
+          </section>
+        </div>
+      </Hammer>
     );
   }
 }
