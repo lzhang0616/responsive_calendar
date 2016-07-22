@@ -3,7 +3,7 @@ import Hammer from 'react-hammerjs';
 import CalendarControls from './calendar_controls';
 import DayView from './day_view/day_view';
 import MonthView from './month_view/month_view.js';
-import ResizeSensor from 'css-element-queries/src/ResizeSensor';
+import resizeSensor from 'css-element-queries/src/ResizeSensor';
 import ViewControls from './view_controls';
 import WeekView from './week_view/week_view';
 import { datetime } from '../utilities/calendar_helpers';
@@ -23,7 +23,7 @@ export default class Calendar extends Component {
   componentDidMount() {
     const node = findDOMNode(this);
     this.setState({ display: node.offsetWidth <= 700 ? 'vertical' : 'horizontal' });
-    ResizeSensor(node, () => {
+    resizeSensor(node, () => {
       // TODO 700 should be a prop as well
       this.setState({ display: node.offsetWidth <= 700 ? 'vertical' : 'horizontal' });
     });
@@ -112,7 +112,7 @@ export default class Calendar extends Component {
         default:
           break;
       }
-    };
+    }
 
     return (
       <Hammer onSwipe={handleSwipe} direction={Hammer.DIRECTION_HORIZONTAL}>
