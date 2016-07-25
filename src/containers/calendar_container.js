@@ -54,15 +54,13 @@ const mapStateToProps = state => {
 
 const batch = (dispatch, actions) => actions.forEach(action => dispatch(action));
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onBack: view => batch(dispatch, [backInDate(view), fetchEventSources()]),
-    onToday: view => batch(dispatch, [backToToday(view), fetchEventSources()]),
-    onForward: view => batch(dispatch, [forwardInDate(view), fetchEventSources()]),
-    showDayView: () => batch(dispatch, [showDayView(), fetchEventSources()]),
-    showWeekView: () => batch(dispatch, [showWeekView(), fetchEventSources()]),
-    showMonthView: () => batch(dispatch, [showMonthView(), fetchEventSources()])
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  onBack: view => batch(dispatch, [backInDate(view), fetchEventSources()]),
+  onToday: view => batch(dispatch, [backToToday(view), fetchEventSources()]),
+  onForward: view => batch(dispatch, [forwardInDate(view), fetchEventSources()]),
+  showDayView: () => batch(dispatch, [showDayView(), fetchEventSources()]),
+  showWeekView: () => batch(dispatch, [showWeekView(), fetchEventSources()]),
+  showMonthView: () => batch(dispatch, [showMonthView(), fetchEventSources()])
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(CalendarContainer);

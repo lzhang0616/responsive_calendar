@@ -2,7 +2,8 @@ import fetch from 'isomorphic-fetch';
 import _ from 'lodash';
 import { INIT_EVENTS, UPDATE_EVENTS, UPDATE_EVENT_SOURCES,
          UPDATE_EVENTS_META, ADD_EVENT_SOURCES, REMOVE_EVENT_SOURCES,
-         UPDATE_DISABLED_EVENT_TYPES, ADD_DISABLED_EVENT_TYPES, REMOVE_DISABLED_EVENT_TYPES } from './actions_types';
+         UPDATE_DISABLED_EVENT_TYPES, ADD_DISABLED_EVENT_TYPES,
+         REMOVE_DISABLED_EVENT_TYPES } from './actions_types';
 import { getRange, flattenState, getCachedStart,
          getCachedEnd, windowSize, windowSizeUnit } from '../utilities/calendar_helpers';
 
@@ -62,22 +63,22 @@ const updateEvents = (init, payload) => {
   return { ...payload, type };
 };
 
-const getNewWindowStart = start => {
-  return start.clone()
+const getNewWindowStart = start => (
+  start.clone()
     .add(-1 * windowSize, windowSizeUnit)
     .startOf(windowSizeUnit)
-    .startOf('week');
-};
+    .startOf('week')
+);
 
-const getNewWindowEnd = end => {
-  return end.clone()
+const getNewWindowEnd = end => (
+  end.clone()
     .add(windowSize, windowSizeUnit)
     .endOf(windowSizeUnit)
     .add(1, 'week')
-    .endOf('week');
-};
+    .endOf('week')
+);
 
-const shouldInit = (start, end, cachedStart, cachedEnd, date) => {
+const shouldInit = (start, end, cachedStart, cachedEnd) => {
   const newStart = getNewWindowStart(cachedStart);
   const newEnd = getNewWindowEnd(cachedEnd);
 
@@ -90,7 +91,7 @@ const getNewRange = (start, end, cachedStart, cachedEnd, init) => {
   let newStart = cachedStart.clone();
   let newEnd = cachedEnd.clone();
 
-  if (init) return [ newStart, newEnd ];
+  if (init) return [newStart, newEnd];
 
   if (start.isSameOrAfter(cachedStart) && end.isSameOrBefore(cachedEnd)) return [];
 
@@ -98,13 +99,13 @@ const getNewRange = (start, end, cachedStart, cachedEnd, init) => {
 
   if (end.isAfter(cachedEnd)) newEnd = getNewWindowEnd(cachedEnd);
 
-  return [ newStart, newEnd ];
+  return [newStart, newEnd];
 };
 
 const sourceUrl = (source, state, newStart, newEnd, init) => {
   const flatState = flattenState(state);
   const { startQueryParam, endQueryParam, dateFormatter,
-          date, view, cachedStart, cachedEnd } = flatState;
+          cachedStart, cachedEnd } = flatState;
 
   let start = newStart;
   let end = newEnd;
@@ -114,10 +115,10 @@ const sourceUrl = (source, state, newStart, newEnd, init) => {
     end = cachedEnd.clone();
   } else {
     if (newStart.isBefore(cachedStart)) end = cachedStart.clone().add(-1, 'day');
-    if (newEnd.isAfter(cachedEnd)) start= cachedEnd.clone().add(1, 'day');
+    if (newEnd.isAfter(cachedEnd)) start = cachedEnd.clone().add(1, 'day');
   }
 
-  const [ startDate, endDate ] = [ start, end ].map(day => day.format(dateFormatter));
+  const [startDate, endDate] = [start, end].map(day => day.format(dateFormatter));
 
   const url = `${source}?${startQueryParam}=${startDate}&${endQueryParam}=${endDate}`;
 
@@ -138,15 +139,15 @@ export const fetchEvent = (source, init, payload) => {
   };
 };
 
-export const fetchEventSources = (init = false, index = 0) => {
-  return (dispatch, getState) => {
+export const fetchEventSources = (init = false, index = 0) => (
+  (dispatch, getState) => {
     const { eventSources, cachedStart, cachedEnd, date, view } = flattenState(getState());
-    const [ start, end ] = getRange(date, view);
+    const [start, end] = getRange(date, view);
     let fetchNeededSources;
 
     if (!prevEventSources || init) prevEventSources = [];
 
-    if (!init && shouldInit(start, end, cachedStart, cachedEnd, date)) {
+    if (!init && shouldInit(start, end, cachedStart, cachedEnd)) {
       dispatch(updateEventsMeta({
         cachedStart: getCachedStart(date),
         cachedEnd: getCachedEnd(date)
@@ -155,7 +156,7 @@ export const fetchEventSources = (init = false, index = 0) => {
       return dispatch(fetchEventSources(true));
     }
 
-    let [ newStart, newEnd ] = getNewRange(start, end, cachedStart, cachedEnd, init);
+    let [newStart, newEnd] = getNewRange(start, end, cachedStart, cachedEnd, init);
 
     if (!newStart) {
       fetchNeededSources = _.difference(eventSources, prevEventSources);
@@ -186,5 +187,5 @@ export const fetchEventSources = (init = false, index = 0) => {
 
       return Promise.resolve();
     }
-  };
-};
+  }
+);
