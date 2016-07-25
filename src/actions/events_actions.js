@@ -16,54 +16,40 @@ const fetchInit = {
   credentials: 'same-origin'
 };
 
-export const addDisabledEventTypes = eventTypes => {
-  return {
-    type: ADD_DISABLED_EVENT_TYPES,
-    eventTypes
-  };
-};
+export const addDisabledEventTypes = eventTypes => ({
+  type: ADD_DISABLED_EVENT_TYPES,
+  eventTypes
+});
 
-export const removeDisabledEventTypes = eventTypes => {
-  return {
-    type: REMOVE_DISABLED_EVENT_TYPES,
-    eventTypes
-  };
-};
+export const removeDisabledEventTypes = eventTypes => ({
+  type: REMOVE_DISABLED_EVENT_TYPES,
+  eventTypes
+});
 
-export const updateDisabledEventTypes = eventTypes => {
-  return {
-    type: UPDATE_DISABLED_EVENT_TYPES,
-    eventTypes
-  };
-};
+export const updateDisabledEventTypes = eventTypes => ({
+  type: UPDATE_DISABLED_EVENT_TYPES,
+  eventTypes
+});
 
-export const addEventSources = eventSources => {
-  return {
-    type: ADD_EVENT_SOURCES,
-    eventSources
-  };
-};
+export const addEventSources = eventSources => ({
+  type: ADD_EVENT_SOURCES,
+  eventSources
+});
 
-export const removeEventSources = eventSources => {
-  return {
-    type: REMOVE_EVENT_SOURCES,
-    eventSources
-  };
-};
+export const removeEventSources = eventSources => ({
+  type: REMOVE_EVENT_SOURCES,
+  eventSources
+});
 
-export const updateEventSources = eventSources => {
-  return {
-    type: UPDATE_EVENT_SOURCES,
-    eventSources
-  };
-};
+export const updateEventSources = eventSources => ({
+  type: UPDATE_EVENT_SOURCES,
+  eventSources
+});
 
-export const updateEventsMeta = metaShouldUpdate => {
-  return {
-    type: UPDATE_EVENTS_META,
-    metaShouldUpdate
-  };
-};
+export const updateEventsMeta = metaShouldUpdate => ({
+  type: UPDATE_EVENTS_META,
+  metaShouldUpdate
+});
 
 const updateEvents = (init, payload) => {
   let type;
