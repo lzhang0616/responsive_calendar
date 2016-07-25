@@ -7,7 +7,7 @@ import { render, unmountComponentAtNode } from 'react-dom';
 let defaultOptions = { renderDivId: 'root' };
 let rendered = false;
 
-const mapViewsToProps = (views={}) => {
+const mapViewsToProps = (views = {}) => {
   const viewTypes = ['day', 'week', 'month'];
   const props = {};
 

@@ -3,7 +3,8 @@ import moment from 'moment';
 import _ from 'lodash';
 import Event from '../components/event';
 
-const renderShowMoreLink = (events, { eventLimitSize, eventLimitClick, date, updateViewAndDate }, suffix = 'more') => {
+const renderShowMoreLink = (events, { eventLimitSize, eventLimitClick,
+                                      date, updateViewAndDate }, suffix = 'more') => {
   const len = events.length;
   if (len <= eventLimitSize) return null;
 
@@ -53,22 +54,18 @@ const renderEventsWithPlainLimit = (props) => {
   return eventsRendered;
 };
 
-const summaryLimitEventTitle = (eventType, eventCount) => {
-  return `${eventType}: ${eventCount} events`;
-};
+const summaryLimitEventTitle = (eventType, eventCount) => `${eventType}: ${eventCount} events`;
 
-const renderEventsWithSummaryLimit = (props)  => {
+const renderEventsWithSummaryLimit = (props) => {
   const { events, onClickEvent, eventLimitSize } = props;
 
   const eventsByType = _.groupBy(events, 'type');
   const eventTypes = _.keys(eventsByType);
 
-  const summaryEvents = eventTypes .map(type => {
-          return {
-            title: summaryLimitEventTitle(type, eventsByType[type].length),
-            type
-          };
-        });
+  const summaryEvents = eventTypes.map(type => ({
+    title: summaryLimitEventTitle(type, eventsByType[type].length),
+    type
+  }));
 
   const eventsRendered = summaryEvents
           .slice(0, eventLimitSize)
@@ -88,7 +85,7 @@ const renderEvents = (props, view) => {
 
   switch (eventLimit) {
     case 'none':
-    events = renderEventsWithoutLimit(others);
+      events = renderEventsWithoutLimit(others);
       break;
     case 'plain':
       events = renderEventsWithPlainLimit(others);

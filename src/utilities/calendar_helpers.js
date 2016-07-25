@@ -12,19 +12,19 @@ export const weekday = number => moment().weekday(number);
 
 export const today = () => moment().startOf('day');
 
-export const getCachedStart = date => {
-  return date.clone()
+export const getCachedStart = date => (
+  date.clone()
     .add(-1, windowSizeUnit)
     .startOf(windowSizeUnit)
-    .startOf('week');
-};
+    .startOf('week')
+);
 
-export const getCachedEnd = date => {
-  return date.clone()
+export const getCachedEnd = date => (
+  date.clone()
     .add(1, windowSizeUnit)
     .endOf(windowSizeUnit)
-    .endOf('week');
-};
+    .endOf('week')
+);
 
 
 export const flattenState = ({ calendarManager, eventsManager, calendarMetaData }) => {
@@ -64,7 +64,7 @@ export const getEndDate = (date, view) => {
       endDate = moment(date)
         .endOf('month')
         .endOf('week');
-        break;
+      break;
     case 'week':
       endDate = moment(date)
         .endOf('week');
@@ -79,14 +79,14 @@ export const getEndDate = (date, view) => {
   return endDate;
 };
 
-export const getRange = (date, view) => [ getStartDate(date, view), getEndDate(date, view) ];
+export const getRange = (date, view) => [getStartDate(date, view), getEndDate(date, view)];
 
-const getTense = (date, today) => {
+const getTense = (date, now) => {
   let tense = '';
 
-  if (date.isBefore(today)) {
+  if (date.isBefore(now)) {
     tense = 'past';
-  } else if (date.isSame(today, 'day')) {
+  } else if (date.isSame(now, 'day')) {
     tense = 'today';
   } else {
     tense = 'future';
@@ -101,13 +101,13 @@ export const getDays = ({ date, view, events, selected, eventDateFormatter,
   let day;
   const startDate = getStartDate(date, view).clone();
   const endDate = getEndDate(date, view);
-  const today = moment().startOf('day');
+  const now = moment().startOf('day');
 
   const eventShouldVisible = event => {
     const { type, _responsiveCalendarSource } = event;
 
     return _.indexOf(disabledEventTypes, type) < 0 &&
-      ( !_responsiveCalendarSource || _.indexOf(eventSources, _responsiveCalendarSource) > -1 );
+      (!_responsiveCalendarSource || _.indexOf(eventSources, _responsiveCalendarSource) > -1);
   };
 
   const eventsByDay = _.groupBy(_.filter(events, event => eventShouldVisible(event)), eventGroupByKey);
@@ -118,7 +118,7 @@ export const getDays = ({ date, view, events, selected, eventDateFormatter,
     current = startDate.clone();
     day = {
       date: current.toDate(),
-      tense: getTense(current, today),
+      tense: getTense(current, now),
       first: current.date() === 1,
       events: eventsByDay[current.format(eventDateFormatter)] || [],
       selected
