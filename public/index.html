@@ -34,7 +34,6 @@
           eventLimitSize: 2
         }
       },
-      dateAndViewUpdated: (date, view) => page(`/${date}/${view}`),
       onEventUpdated: (event, element, view) => {
         var popover = new Drop({
           target: element,
@@ -46,17 +45,16 @@
           position: 'bottom left',
         });
         popover.open();
+      },
+      eventDataTransform: events => {
+        return events.map(event => {
+          event.start = new Date(event.date);
+          event.end = new Date(event.date);
+          event.allDay = true;
+
+          return event;
+        });
       }
     });
-
-    page.base('/#');
-
-    const defaultOnpopstate = window.onpopstate;
-
-    window.onpopstate = () => {
-      if (defaultOnpopstate) defaultOnpopstate();
-      const [ date, view ] = document.location.hash.substring(2).split('/');
-      responsiveCalendar.updateViewAndDate(view, date);
-    };
   </script>
 </html>

@@ -1,0 +1,10 @@
+.rbc-calendar {
+  min-height: 650px;
+}
+
+.rbc-now a {
+  color: crimson;
+}
+.rbc-toolbar-label {
+  font-weight: bold;
+}

@@ -38,6 +38,7 @@
     "lodash": "~4.13.1",
     "moment": "~2.13.0",
     "react": "~0.14.8",
+    "react-big-calendar": "~0.11.0",
     "react-dom": "~0.14.8",
     "react-hammerjs": "~0.5.0",
     "react-redux": "~4.4.5",
@@ -70,7 +71,7 @@
     "postcss-loader": "~0.9.1",
     "sass-loader": "~3.2.1",
     "style-loader": "~0.13.1",
-    "webpack": "~2.1.0-beta.13",
+    "webpack": "2.1.0-beta.13",
     "webpack-dev-middleware": "~1.6.1",
     "webpack-hot-middleware": "~2.10.0",
     "webpack-visualizer-plugin": "~0.1.5"
